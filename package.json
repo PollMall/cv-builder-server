@@ -1,0 +1,36 @@
+{
+  "name": "cv-builder-server",
+  "version": "1.0.0",
+  "description": "This is the server for the cv-builder-app. It uses Google Firestore Database and ApolloServer for GraphQL.",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PollMall/cv-builder-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PollMall/cv-builder-server/issues"
+  },
+  "homepage": "https://github.com/PollMall/cv-builder-server#readme",
+  "dependencies": {
+    "apollo-server": "^3.0.2",
+    "express": "^4.17.1",
+    "graphql": "^15.5.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.2",
+    "typescript": "^4.3.5"
+  }
+}
