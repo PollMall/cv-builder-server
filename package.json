@@ -4,7 +4,7 @@
   "description": "This is the server for the cv-builder-app. It uses Google Firestore Database and ApolloServer for GraphQL.",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node dist/app.js",
+    "start": "tsc && nodemon dist/src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
   },
@@ -22,6 +22,7 @@
   "dependencies": {
     "apollo-server": "^3.0.2",
     "express": "^4.17.1",
+    "firebase-admin": "^9.11.0",
     "graphql": "^15.5.1"
   },
   "devDependencies": {
@@ -30,6 +31,7 @@
     "eslint": "^7.31.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "nodemon": "^2.0.12",
     "prettier": "^2.3.2",
     "typescript": "^4.3.5"
   }
