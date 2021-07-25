@@ -1,22 +1,7 @@
 import { ApolloServer, ApolloError } from 'apollo-server';
 import { typeDefs } from './schema';
-import { readMockUsers, writeMockUser } from './db/mock';
-
-// const books = [
-//   {
-//     title: 'The Awakening',
-//     author: 'Kate Chopin',
-//   },
-//   {
-//     title: 'City of Glass',
-//     author: 'Paul Auster',
-//   },
-// ];
-
-// const users = [
-//   { firstName: 'Paul', lastName: 'Popa' },
-//   { firstName: 'Alexandra', lastName: 'Hulpoi' },
-// ];
+import { readMockUsers } from './db/mock';
+import { registerUser } from './db/user';
 
 const resolvers = {
   Query: {
@@ -29,9 +14,9 @@ const resolvers = {
     },
   },
   Mutation: {
-    addMockUser: async () => {
+    registerUser: async (_, { uuid }) => {
       try {
-        return writeMockUser();
+        return registerUser(uuid);
       } catch (err) {
         throw new ApolloError(err);
       }

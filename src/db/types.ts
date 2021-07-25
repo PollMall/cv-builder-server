@@ -17,6 +17,18 @@ interface Cv {
   personalInfo?: PersonalInfo;
 }
 
+interface PersonalInfo {
+  fullName: string;
+  email: string;
+  phone?: string;
+  about?: string;
+}
+
+interface LocationInfo {
+  address?: string;
+  websites?: string[];
+}
+
 interface Education {
   id: string;
   name: string;
@@ -50,16 +62,8 @@ interface SoftSkill {
   rating: number;
 }
 
-interface LocationInfo {
-  address?: string;
-  websites?: string[];
+interface FieldSkill {
+  popularity: number;
 }
 
-interface PersonalInfo {
-  fullName: string;
-  email: string;
-  phone?: string;
-  about?: string;
-}
-
-export { User };
+export { User, Cv, Education, WorkExperience, Language, HardSkill, SoftSkill, LocationInfo, PersonalInfo, FieldSkill };
