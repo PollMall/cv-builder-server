@@ -9,12 +9,15 @@ interface Cv {
   field: string;
   educations?: Education[];
   workExperiences?: WorkExperience[];
-  feedback?: boolean;
+  feedback: boolean;
   hardSkills?: HardSkill[];
   softSkills?: SoftSkill[];
   languages?: Language[];
   locationInfo?: LocationInfo;
   personalInfo?: PersonalInfo;
+  createdAt: string;
+  updatedAt: string;
+  score: number;
 }
 
 interface PersonalInfo {
@@ -30,7 +33,7 @@ interface LocationInfo {
 }
 
 interface Education {
-  id: string;
+  id?: string;
   name: string;
   description?: string;
   location?: string;
@@ -39,7 +42,7 @@ interface Education {
 }
 
 interface WorkExperience {
-  id: string;
+  id?: string;
   name: string;
   description?: string;
   location?: string;
@@ -66,4 +69,28 @@ interface FieldSkill {
   popularity: number;
 }
 
-export { User, Cv, Education, WorkExperience, Language, HardSkill, SoftSkill, LocationInfo, PersonalInfo, FieldSkill };
+interface CvRequest {
+  title: string;
+  field: string;
+  educations?: Education[];
+  workExperiences?: WorkExperience[];
+  hardSkills?: HardSkill[];
+  softSkills?: SoftSkill[];
+  languages?: Language[];
+  locationInfo?: LocationInfo;
+  personalInfo?: PersonalInfo;
+}
+
+export {
+  User,
+  Cv,
+  Education,
+  WorkExperience,
+  Language,
+  HardSkill,
+  SoftSkill,
+  LocationInfo,
+  PersonalInfo,
+  FieldSkill,
+  CvRequest,
+};

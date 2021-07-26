@@ -2,9 +2,9 @@ import { ApolloServer } from 'apollo-server';
 import { typeDefs } from './schema';
 import { readMockUsers } from './db/mock';
 import { registerUser } from './db/user';
-import { addCv, deleteCv, updateCv, readCv, readAllCvs } from './db/cv';
+import { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs } from './db/cv';
 import { resolve } from './utils';
-import { Cv } from './db/types';
+import { Cv, CvRequest } from './db/types';
 
 const resolvers = {
   Query: {
@@ -17,6 +17,9 @@ const resolvers = {
     cv: async (_, { uuid, cvId }) => {
       return resolve(readCv, uuid, cvId);
     },
+    bestCvs: async (_, { uuid, noOfCvs }) => {
+      return resolve(readBestNCvs, uuid, noOfCvs);
+    },
   },
   Mutation: {
     registerUser: async (_, { uuid }) => {
@@ -28,8 +31,8 @@ const resolvers = {
     deleteCv: async (_, { uuid, cvId }) => {
       return resolve(deleteCv, uuid, cvId);
     },
-    updateCv: async (_, { uuid, cvId, newCv }) => {
-      return resolve(updateCv, uuid, cvId, newCv);
+    updateCv: async (_, { uuid, newCv }) => {
+      return resolve(updateCv, uuid, newCv);
     },
   },
 };
@@ -42,14 +45,12 @@ const server = new ApolloServer({ typeDefs, resolvers });
 server
   .listen()
   .then(({ url }) => {
-    const cv: Cv = {
-      id: 'id1234',
+    const cvRequest: CvRequest = {
       title: 'this is my cv',
       field: 'Computer Science',
       educations: [],
       workExperiences: [
         {
-          id: 'id1234',
           name: 'Modus Create',
           description: 'Awesome',
           location: 'Cluj-Napoca, Romania',
@@ -58,6 +59,26 @@ server
         },
       ],
     };
+    const cv: Cv = {
+      id: '19e0d0d3-04fd-47f5-a2c9-3a8fcf3d2374',
+      title: 'this is my cv',
+      field: 'Computer Science',
+      educations: [],
+      workExperiences: [
+        {
+          name: 'Modus Create',
+          description: 'Awesome',
+          location: 'Cluj-Napoca, Romania',
+          startAt: 0,
+          endAt: 0,
+        },
+      ],
+      feedback: false,
+      createdAt: '1627332711879',
+      updatedAt: '1627332711879',
+      score: 22,
+    };
+    console.log(JSON.stringify(cvRequest));
     console.log(JSON.stringify(cv));
     console.log(`🚀  Server ready at ${url}`);
   })

@@ -18,6 +18,9 @@ const typeDefs = gql`
     languages: [Language]
     locationInfo: LocationInfo
     personalInfo: PersonalInfo
+    createdAt: String
+    updatedAt: String
+    score: Int
   }
 
   type PersonalInfo {
@@ -73,13 +76,14 @@ const typeDefs = gql`
     users: [User]
     cvs(uuid: String!): [Cv]
     cv(uuid: String!, cvId: String!): Cv
+    bestCvs(uuid: String!, noOfCvs: Int!): [Cv]
   }
 
   type Mutation {
     registerUser(uuid: String!): User
     addCv(uuid: String!, cv: String!): Cv
     deleteCv(uuid: String!, cvId: String!): Cv
-    updateCv(uuid: String!, cvId: String!, newCv: String!): Cv
+    updateCv(uuid: String!, newCv: String!): Cv
   }
 `;
 
