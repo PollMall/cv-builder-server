@@ -71,10 +71,15 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
+    cvs(uuid: String!): [Cv]
+    cv(uuid: String!, cvId: String!): Cv
   }
 
   type Mutation {
     registerUser(uuid: String!): User
+    addCv(uuid: String!, cv: String!): Cv
+    deleteCv(uuid: String!, cvId: String!): Cv
+    updateCv(uuid: String!, cvId: String!, newCv: String!): Cv
   }
 `;
 
