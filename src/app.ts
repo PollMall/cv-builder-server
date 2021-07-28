@@ -5,6 +5,7 @@ import { registerUser } from './db/user';
 import { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs } from './db/cv';
 import { resolve } from './utils';
 import { Cv, CvRequest } from './db/types';
+import { updateSkills } from './db/skill';
 
 const resolvers = {
   Query: {
@@ -80,6 +81,9 @@ server
     };
     console.log(JSON.stringify(cvRequest));
     console.log(JSON.stringify(cv));
+
+    console.log(updateSkills('Computer Science', cv.hardSkills, cv.softSkills));
+
     console.log(`🚀  Server ready at ${url}`);
   })
   .catch((err) => console.log(err));
