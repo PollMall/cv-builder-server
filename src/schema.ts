@@ -69,6 +69,7 @@ const typeDefs = gql`
   }
 
   type FieldSkill {
+    name: String
     popularity: Int
   }
 
@@ -77,6 +78,7 @@ const typeDefs = gql`
     cvs(uuid: String!): [Cv]
     cv(uuid: String!, cvId: String!): Cv
     bestCvs(uuid: String!, noOfCvs: Int!): [Cv]
+    recommendSkills(field: String!, typeOfSkills: String!): [FieldSkill]
   }
 
   type Mutation {

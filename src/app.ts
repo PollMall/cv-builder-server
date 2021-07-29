@@ -5,7 +5,7 @@ import { registerUser } from './db/user';
 import { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs } from './db/cv';
 import { resolve } from './utils';
 import { Cv, CvRequest } from './db/types';
-import { updateSkills } from './db/skill';
+import { recommendSkills } from './db/skill';
 
 const resolvers = {
   Query: {
@@ -20,6 +20,9 @@ const resolvers = {
     },
     bestCvs: async (_, { uuid, noOfCvs }) => {
       return resolve(readBestNCvs, uuid, noOfCvs);
+    },
+    recommendSkills: async (_, { field, typeOfSkills }) => {
+      return resolve(recommendSkills, field, typeOfSkills);
     },
   },
   Mutation: {
@@ -59,6 +62,16 @@ server
           endAt: 0,
         },
       ],
+      hardSkills: [
+        {
+          name: 'React.js',
+          rating: 5,
+        },
+        {
+          name: 'React Native',
+          rating: 4,
+        },
+      ],
     };
     const cv: Cv = {
       id: '19e0d0d3-04fd-47f5-a2c9-3a8fcf3d2374',
@@ -74,6 +87,16 @@ server
           endAt: 0,
         },
       ],
+      hardSkills: [
+        {
+          name: 'React.js',
+          rating: 5,
+        },
+        {
+          name: 'React Native',
+          rating: 4,
+        },
+      ],
       feedback: false,
       createdAt: '1627332711879',
       updatedAt: '1627332711879',
@@ -81,8 +104,6 @@ server
     };
     console.log(JSON.stringify(cvRequest));
     console.log(JSON.stringify(cv));
-
-    console.log(updateSkills('Computer Science', cv.hardSkills, cv.softSkills));
 
     console.log(`🚀  Server ready at ${url}`);
   })

@@ -7,8 +7,8 @@
 
 const getDifference = (a: any[], b: any[]) => {
   const result = [];
-  a.forEach((el) => {
-    if (b.indexOf(el) === -1) {
+  a?.forEach((el) => {
+    if (b?.indexOf(el) === -1) {
       result.push(el);
     }
   });
