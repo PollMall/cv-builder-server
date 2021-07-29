@@ -68,7 +68,7 @@ const recommendSkills = async (field: string, typeOfSkills: 'hardSkills' | 'soft
   const skillsCol = db.collection('fields').doc(field).collection(typeOfSkills);
   const mostPopularSkillsDocs = await skillsCol.orderBy('popularity', 'desc').limit(3).get();
   const mostPopularSkills: FieldSkill[] = [];
-  mostPopularSkillsDocs.docs.forEach((doc) => mostPopularSkills.push({ ...doc.data, name: doc.id } as FieldSkill));
+  mostPopularSkillsDocs.docs.forEach((doc) => mostPopularSkills.push({ ...doc.data(), name: doc.id } as FieldSkill));
   return mostPopularSkills;
 };
 
