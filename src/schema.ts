@@ -2,8 +2,16 @@ import { gql } from 'apollo-server';
 
 const typeDefs = gql`
   type User {
-    uuid: String
+    uid: String
+    displayName: String
+    credentials: Credentials
     cvs: [Cv]
+  }
+
+  type Credentials {
+    idToken: String
+    refreshToken: String
+    expiresIn: Int
   }
 
   type Cv {
@@ -73,25 +81,21 @@ const typeDefs = gql`
     popularity: Int
   }
 
-  type Credentials {
-    email: String
-    displayName: String
-  }
-
   type Query {
     users: [User]
-    cvs(uuid: String!): [Cv]
-    cv(uuid: String!, cvId: String!): Cv
-    bestCvs(uuid: String!, noOfCvs: Int!): [Cv]
+    cvs(uid: String!): [Cv]
+    cv(uid: String!, cvId: String!): Cv
+    bestCvs(uid: String!, noOfCvs: Int!): [Cv]
     recommendSkills(field: String!, typeOfSkills: String!): [FieldSkill]
   }
 
   type Mutation {
-    loginUser(email: String!, password: String!): Credentials
-    registerUser(uuid: String!): User
-    addCv(uuid: String!, cv: String!): Cv
-    deleteCv(uuid: String!, cvId: String!): Cv
-    updateCv(uuid: String!, newCv: String!): Cv
+    loginUser(email: String!, password: String!): User
+    signOutUser(uid: String!): Boolean
+    registerUser(email: String!, password: String!, fullName: String!): User
+    addCv(uid: String!, cv: String!): Cv
+    deleteCv(uid: String!, cvId: String!): Cv
+    updateCv(uid: String!, newCv: String!): Cv
   }
 `;
 

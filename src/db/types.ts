@@ -1,6 +1,14 @@
 interface User {
-  uuid: string;
+  uid: string;
+  displayName: string;
+  credentials?: Credentials;
   cvs: Cv[];
+}
+
+interface Credentials {
+  idToken: string;
+  refreshToken: string;
+  expiresIn: number;
 }
 
 interface Cv {
@@ -83,6 +91,7 @@ interface CvRequest {
 
 export {
   User,
+  Credentials,
   Cv,
   Education,
   WorkExperience,

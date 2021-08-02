@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server';
 import { typeDefs } from './schema';
 import { readMockUsers } from './db/mock';
-import { loginUser, registerUser } from './db/user';
+import { loginUser, registerUserV2, signOutUser } from './db/user';
 import { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs } from './db/cv';
 import { resolve } from './utils';
 import { Cv, CvRequest } from './db/types';
@@ -12,14 +12,14 @@ const resolvers = {
     users: async () => {
       return resolve(readMockUsers);
     },
-    cvs: async (_, { uuid }) => {
-      return resolve(readAllCvs, uuid);
+    cvs: async (_, { uid }) => {
+      return resolve(readAllCvs, uid);
     },
-    cv: async (_, { uuid, cvId }) => {
-      return resolve(readCv, uuid, cvId);
+    cv: async (_, { uid, cvId }) => {
+      return resolve(readCv, uid, cvId);
     },
-    bestCvs: async (_, { uuid, noOfCvs }) => {
-      return resolve(readBestNCvs, uuid, noOfCvs);
+    bestCvs: async (_, { uid, noOfCvs }) => {
+      return resolve(readBestNCvs, uid, noOfCvs);
     },
     recommendSkills: async (_, { field, typeOfSkills }) => {
       return resolve(recommendSkills, field, typeOfSkills);
@@ -29,17 +29,20 @@ const resolvers = {
     loginUser: async (_, { email, password }) => {
       return resolve(loginUser, email, password);
     },
-    registerUser: async (_, { uuid }) => {
-      return resolve(registerUser, uuid);
+    signOutUser: async (_, { uid }) => {
+      return resolve(signOutUser, uid);
     },
-    addCv: async (_, { uuid, cv }) => {
-      return resolve(addCv, uuid, cv);
+    registerUser: async (_, { email, password, fullName }) => {
+      return resolve(registerUserV2, email, password, fullName);
     },
-    deleteCv: async (_, { uuid, cvId }) => {
-      return resolve(deleteCv, uuid, cvId);
+    addCv: async (_, { uid, cv }) => {
+      return resolve(addCv, uid, cv);
     },
-    updateCv: async (_, { uuid, newCv }) => {
-      return resolve(updateCv, uuid, newCv);
+    deleteCv: async (_, { uid, cvId }) => {
+      return resolve(deleteCv, uid, cvId);
+    },
+    updateCv: async (_, { uid, newCv }) => {
+      return resolve(updateCv, uid, newCv);
     },
   },
 };
@@ -107,7 +110,6 @@ server
     };
     console.log(JSON.stringify(cvRequest));
     console.log(JSON.stringify(cv));
-    loginUser('test@test.com', 'parolasmechera');
 
     console.log(`🚀  Server ready at ${url}`);
   })

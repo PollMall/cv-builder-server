@@ -1,5 +1,5 @@
 import { db, auth } from '../firebase';
-import { User } from './types';
+import { Credentials, User } from './types';
 import API_KEY from '../apiKey.json';
 import fetch from 'node-fetch';
 
@@ -13,43 +13,42 @@ const URL = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPasswo
 //   }
 // };
 
-const readUser = async (uuid: string) => {
-  const docRef = await db.collection('users').doc(uuid).get();
+const readUser = async (uid: string) => {
+  const docRef = await db.collection('users').doc(uid).get();
   return docRef.data();
 };
 
-const registerUser = async (uuid: string) => {
-  const newUser: User = { uuid, cvs: [] };
-  await db.collection('users').doc(uuid).set(newUser);
+const registerUserV2 = async (email: string, password: string, fullName: string) => {
+  const { uid } = await auth.createUser({ email, password, displayName: fullName });
+  const newUser: User = { uid: uid, displayName: fullName, cvs: [] };
+  await db.collection('users').doc(uid).set(newUser);
   return newUser;
 };
 
-const registerUserV2 = async (email: string, password: string, fullName: string) => {
-  const {
-    uid,
-    email: emailResponse,
-    passwordHash,
-    displayName,
-  } = await auth.createUser({ email, password, displayName: fullName });
-  return { uid, emailResponse, passwordHash, displayName };
+const signOutUser = async (uid: string) => {
+  await auth.revokeRefreshTokens(uid);
+  return true;
 };
 
 const loginUser = async (email: string, password: string) => {
-  const { displayName, error, ...rest } = await (
+  const { idToken, localId, refreshToken, expiresIn, displayName, error } = await (
     await fetch(URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email,
         password,
+        returnSecureToken: true,
       }),
     })
   ).json();
-  console.log({ ...rest });
   if (error) {
     throw new Error(error.message);
   }
-  return { email, displayName };
+
+  const credentials = { idToken, refreshToken, expiresIn } as Credentials;
+  const user = { uid: localId, displayName, credentials } as User;
+  return user;
 };
 
-export { readUser, registerUser, registerUserV2, loginUser };
+export { readUser, registerUserV2, loginUser, signOutUser };
