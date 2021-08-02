@@ -73,6 +73,11 @@ const typeDefs = gql`
     popularity: Int
   }
 
+  type Credentials {
+    email: String
+    displayName: String
+  }
+
   type Query {
     users: [User]
     cvs(uuid: String!): [Cv]
@@ -82,6 +87,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    loginUser(email: String!, password: String!): Credentials
     registerUser(uuid: String!): User
     addCv(uuid: String!, cv: String!): Cv
     deleteCv(uuid: String!, cvId: String!): Cv

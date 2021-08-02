@@ -1,4 +1,4 @@
-import { db } from './firebase';
+import { db } from '../firebase';
 import { Cv, CvRequest, Education, User, WorkExperience } from './types';
 import { v4 as uuidv4 } from 'uuid';
 import { updatePopularity } from './skill';

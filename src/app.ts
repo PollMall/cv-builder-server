@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server';
 import { typeDefs } from './schema';
 import { readMockUsers } from './db/mock';
-import { registerUser } from './db/user';
+import { loginUser, registerUser } from './db/user';
 import { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs } from './db/cv';
 import { resolve } from './utils';
 import { Cv, CvRequest } from './db/types';
@@ -26,6 +26,9 @@ const resolvers = {
     },
   },
   Mutation: {
+    loginUser: async (_, { email, password }) => {
+      return resolve(loginUser, email, password);
+    },
     registerUser: async (_, { uuid }) => {
       return resolve(registerUser, uuid);
     },
@@ -104,6 +107,7 @@ server
     };
     console.log(JSON.stringify(cvRequest));
     console.log(JSON.stringify(cv));
+    loginUser('test@test.com', 'parolasmechera');
 
     console.log(`🚀  Server ready at ${url}`);
   })
