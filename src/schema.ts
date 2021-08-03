@@ -83,7 +83,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
-    cvs(uid: String!): [Cv]
+    cvs(idToken: String!, uid: String!): [Cv]
     cv(uid: String!, cvId: String!): Cv
     bestCvs(uid: String!, noOfCvs: Int!): [Cv]
     recommendSkills(field: String!, typeOfSkills: String!): [FieldSkill]
@@ -96,6 +96,7 @@ const typeDefs = gql`
     addCv(uid: String!, cv: String!): Cv
     deleteCv(uid: String!, cvId: String!): Cv
     updateCv(uid: String!, newCv: String!): Cv
+    refreshTokenUser(refreshToken: String!): Credentials
   }
 `;
 

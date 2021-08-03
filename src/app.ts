@@ -1,9 +1,9 @@
 import { ApolloServer } from 'apollo-server';
 import { typeDefs } from './schema';
 import { readMockUsers } from './db/mock';
-import { loginUser, registerUserV2, signOutUser } from './db/user';
+import { loginUser, refreshTokenUser, registerUserV2, signOutUser } from './db/user';
 import { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs } from './db/cv';
-import { resolve } from './utils';
+import { resolve, resolvePrivate } from './utils';
 import { Cv, CvRequest } from './db/types';
 import { recommendSkills } from './db/skill';
 
@@ -12,8 +12,8 @@ const resolvers = {
     users: async () => {
       return resolve(readMockUsers);
     },
-    cvs: async (_, { uid }) => {
-      return resolve(readAllCvs, uid);
+    cvs: async (_, { idToken, uid }) => {
+      return resolvePrivate(readAllCvs, idToken, uid);
     },
     cv: async (_, { uid, cvId }) => {
       return resolve(readCv, uid, cvId);
@@ -43,6 +43,9 @@ const resolvers = {
     },
     updateCv: async (_, { uid, newCv }) => {
       return resolve(updateCv, uid, newCv);
+    },
+    refreshTokenUser: async (_, { refreshToken }) => {
+      return resolve(refreshTokenUser, refreshToken);
     },
   },
 };
