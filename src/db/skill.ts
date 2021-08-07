@@ -72,4 +72,11 @@ const recommendSkills = async (field: string, typeOfSkills: 'hardSkills' | 'soft
   return mostPopularSkills;
 };
 
-export { updatePopularity, recommendSkills };
+const getSkills = async (field: string, typeOfSkills: 'hardSkills' | 'softSkills') => {
+  const skillsCol = db.collection('fields').doc(field).collection(typeOfSkills);
+  const skills: FieldSkill[] = [];
+  (await skillsCol.get()).forEach((doc) => skills.push({ ...doc.data(), name: doc.id } as FieldSkill));
+  return skills;
+};
+
+export { updatePopularity, recommendSkills, getSkills };

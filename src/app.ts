@@ -5,7 +5,8 @@ import { loginUser, refreshTokenUser, registerUserV2, signOutUser } from './db/u
 import { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs } from './db/cv';
 import { resolve, resolvePrivate } from './utils';
 import { Cv, CvRequest } from './db/types';
-import { recommendSkills } from './db/skill';
+import { getSkills, recommendSkills } from './db/skill';
+import { getFields } from './db/field';
 
 const resolvers = {
   Query: {
@@ -23,6 +24,12 @@ const resolvers = {
     },
     recommendSkills: async (_, { field, typeOfSkills }) => {
       return resolve(recommendSkills, field, typeOfSkills);
+    },
+    skills: async (_, { field, typeOfSkills }) => {
+      return resolve(getSkills, field, typeOfSkills);
+    },
+    fields: async () => {
+      return resolve(getFields);
     },
   },
   Mutation: {

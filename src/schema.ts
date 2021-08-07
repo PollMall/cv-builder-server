@@ -87,6 +87,8 @@ const typeDefs = gql`
     cv(uid: String!, cvId: String!): Cv
     bestCvs(uid: String!, noOfCvs: Int!): [Cv]
     recommendSkills(field: String!, typeOfSkills: String!): [FieldSkill]
+    skills(field: String!, typeOfSkills: String!): [FieldSkill]
+    fields: [String]
   }
 
   type Mutation {
