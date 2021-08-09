@@ -45,8 +45,8 @@ interface Education {
   name: string;
   description?: string;
   location?: string;
-  startAt: number;
-  endAt: number;
+  startAt: string;
+  endAt: string;
 }
 
 interface WorkExperience {
@@ -54,8 +54,8 @@ interface WorkExperience {
   name: string;
   description?: string;
   location?: string;
-  startAt: number;
-  endAt: number;
+  startAt: string;
+  endAt: string;
 }
 
 interface Language {

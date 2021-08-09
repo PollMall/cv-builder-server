@@ -48,8 +48,8 @@ const typeDefs = gql`
     name: String
     description: String
     location: String
-    startAt: Int
-    endAt: Int
+    startAt: String
+    endAt: String
   }
 
   type WorkExperience {
@@ -57,8 +57,8 @@ const typeDefs = gql`
     name: String
     description: String
     location: String
-    startAt: Int
-    endAt: Int
+    startAt: String
+    endAt: String
   }
 
   type Language {
