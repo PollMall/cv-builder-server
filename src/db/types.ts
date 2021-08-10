@@ -20,7 +20,7 @@ interface Cv {
   feedback: boolean;
   hardSkills?: HardSkill[];
   softSkills?: SoftSkill[];
-  languages?: Language[];
+  languages?: string[];
   locationInfo?: LocationInfo;
   personalInfo?: PersonalInfo;
   createdAt: string;
@@ -58,11 +58,6 @@ interface WorkExperience {
   endAt: string;
 }
 
-interface Language {
-  name: string;
-  rating: number;
-}
-
 interface HardSkill {
   name: string;
   rating: number;
@@ -84,7 +79,7 @@ interface CvRequest {
   workExperiences?: WorkExperience[];
   hardSkills?: HardSkill[];
   softSkills?: SoftSkill[];
-  languages?: Language[];
+  languages?: string[];
   locationInfo?: LocationInfo;
   personalInfo?: PersonalInfo;
 }
@@ -95,7 +90,6 @@ export {
   Cv,
   Education,
   WorkExperience,
-  Language,
   HardSkill,
   SoftSkill,
   LocationInfo,

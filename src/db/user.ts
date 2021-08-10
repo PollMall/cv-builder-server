@@ -44,7 +44,8 @@ const registerUserV2 = async (email: string, password: string, fullName: string)
   const { uid } = await auth.createUser({ email, password, displayName: fullName });
   const newUser: User = { uid: uid, displayName: fullName, cvs: [] };
   await db.collection('users').doc(uid).set(newUser);
-  return newUser;
+  const loggedUser = await loginUser(email, password);
+  return loggedUser;
 };
 
 const signOutUser = async (uid: string) => {

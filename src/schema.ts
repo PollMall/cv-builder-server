@@ -23,7 +23,7 @@ const typeDefs = gql`
     feedback: Boolean
     hardSkills: [HardSkill]
     softSkills: [SoftSkill]
-    languages: [Language]
+    languages: [String]
     locationInfo: LocationInfo
     personalInfo: PersonalInfo
     createdAt: String
@@ -59,11 +59,6 @@ const typeDefs = gql`
     location: String
     startAt: String
     endAt: String
-  }
-
-  type Language {
-    name: String
-    rating: Int
   }
 
   type HardSkill {
