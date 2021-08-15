@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        font-family: 'Times New Roman';
+      }
+      .document {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        width: 563px;
+        margin: 0 auto;
+        border: 2px solid #494948;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        background-color: #f1f0ee;
+      }
+      .header {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        padding: 20px;
+        -webkit-justify-content: space-around;
+        justify-content: space-around;
+      }
+      .fullName {
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        font-weight: 700;
+        font-size: 40px;
+        font-style: italic;
+      }
+      .about {
+        width: 250px;
+        font-style: italic;
+      }
+      .content {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        -webkit-justify-content: space-around;
+        justify-content: space-around;
+        padding: 20px;
+      }
+      .field {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+      }
+      .fieldTitle {
+        width: 230px;
+        font-size: 27px;
+        font-weight: 700;
+        font-style: italic;
+        color: #b99a46;
+      }
+      .fieldContent {
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+      }
+      .fieldContent > *:nth-child(1n + 2) {
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        margin-top: 5px;
+      }
+      .divider {
+        display: block;
+        width: 100%;
+        height: 1px;
+        margin: 15px auto;
+        background-color: #cbcecb;
+      }
+      .experience-name {
+        font-size: 22px;
+      }
+      .experience-location {
+        font-size: 17px;
+      }
+      .experience-period {
+        font-style: italic;
+        font-size: 13px;
+        margin: 5px 0;
+      }
+      .experience-description {
+      }
+      .skills {
+      }
+      .skill {
+        width: 100%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+      .skill-name {
+        margin-right: 20px;
+      }
+      .skill-rating {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        border: 1px solid black;
+      }
+      .skill-rating-fill {
+        width: 30px;
+        height: 7px;
+        background-color: #b99a46;
+      }
+      .skill-rating-blank {
+        width: 30px;
+        height: 7px;
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="document">
+      <div class="header">
+        <div class="fullName">Paul Popa</div>
+        <div class="about">Hire me. I am eager to learn and want to discover new things.</div>
+      </div>
+
+      <div class="content">
+        <div class="field">
+          <div class="fieldTitle">Contact</div>
+          <div class="fieldContent contact">
+            <div>ppir2643@scs.ubbcluj.ro</div>
+            <div>0700000000</div>
+            <div>adresa</div>
+            <div class="fieldContent websites">
+              <!-- map websites -->
+              <div>github</div>
+              <div>linkedIn</div>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+
+        <div class="field">
+          <div class="fieldTitle">Languages</div>
+          <div class="fieldContent languages">
+            <!-- map languages -->
+            <div>romanian</div>
+            <div>english</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+
+        <div class="field">
+          <div class="fieldTitle">Work Experience</div>
+          <div class="fieldContent experiences">
+            <!-- map workExperiences -->
+            <div class="experience">
+              <span class="experience-name">Google</span>
+              -
+              <span class="experience-location">Cluj-Napoca, Romania</span>
+              <div class="experience-period">
+                <span class="experience-startAt">6/4/2021</span>
+                -
+                <span class="experience-endAt">7/15/2021</span>
+              </div>
+              <div class="experience-description">• Intern</div>
+            </div>
+            <div class="experience">
+              <span class="experience-name">Amazon</span>
+              -
+              <span class="experience-location">Cluj-Napoca, Romania</span>
+              <div class="experience-period">
+                <span class="experience-startAt">6/4/2021</span>
+                -
+                <span class="experience-endAt">7/15/2021</span>
+              </div>
+              <div class="experience-description">• Intern</div>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+
+        <div class="field">
+          <div class="fieldTitle">Education</div>
+          <div class="fieldContent experiences">
+            <!-- map educations -->
+            <div class="experience">
+              <span class="experience-name">UBB</span>
+              -
+              <span class="experience-location">Cluj-Napoca, Romania</span>
+              <div class="experience-period">
+                <span class="experience-startAt">10/1/2018</span>
+                -
+                <span class="experience-endAt">PRESENT</span>
+              </div>
+              <div class="experience-description">• Senior year</div>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+
+        <div class="field">
+          <div class="fieldTitle">Hard Skills</div>
+          <div class="fieldContent skills">
+            <!-- map hardSkills -->
+            <div class="skill">
+              <div class="skill-name">AWS</div>
+              <div class="skill-rating">
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-blank"></div>
+                <div class="skill-rating-blank"></div>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="skill-name">React.js</div>
+              <div class="skill-rating">
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-blank"></div>
+                <div class="skill-rating-blank"></div>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="skill-name">React Native</div>
+              <div class="skill-rating">
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-blank"></div>
+                <div class="skill-rating-blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+
+        <div class="field">
+          <div class="fieldTitle">Soft Skills</div>
+          <div class="fieldContent skills">
+            <!-- map softSkills -->
+            <div class="skill">
+              <div class="skill-name">Communication</div>
+              <div class="skill-rating">
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-blank"></div>
+                <div class="skill-rating-blank"></div>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="skill-name">Team player</div>
+              <div class="skill-rating">
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-blank"></div>
+              </div>
+            </div>
+            <div class="skill">
+              <div class="skill-name">Fast learner</div>
+              <div class="skill-rating">
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-fill"></div>
+                <div class="skill-rating-blank"></div>
+                <div class="skill-rating-blank"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

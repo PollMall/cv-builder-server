@@ -84,6 +84,7 @@ const typeDefs = gql`
     recommendSkills(field: String!, typeOfSkills: String!): [FieldSkill]
     skills(field: String!, typeOfSkills: String!): [FieldSkill]
     fields: [String]
+    getPDF(cv: String): String
   }
 
   type Mutation {

@@ -6,6 +6,7 @@ import { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs } from './d
 import { resolve, resolvePrivate } from './utils';
 import { getSkills, recommendSkills } from './db/skill';
 import { getFields } from './db/field';
+import { getPDFFromTemplate } from './db/template';
 
 const resolvers = {
   Query: {
@@ -29,6 +30,12 @@ const resolvers = {
     },
     fields: async () => {
       return resolve(getFields);
+    },
+    // getMockPDF: async () => {
+    //   return resolve(getPDFFromTemplate);
+    // },
+    getPDF: async (_, { cv }) => {
+      return resolve(getPDFFromTemplate, cv);
     },
   },
   Mutation: {
