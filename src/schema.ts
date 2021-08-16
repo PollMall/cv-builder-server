@@ -29,6 +29,7 @@ const typeDefs = gql`
     createdAt: String
     updatedAt: String
     score: Int
+    downloadLink: String
   }
 
   type PersonalInfo {

@@ -2,9 +2,14 @@ import pdf from 'html-pdf';
 import helper from './templates/helper';
 import { Cv } from './types';
 
-const getPDFFromTemplate = async (cvRequest: string) => {
-  const cv = JSON.parse(cvRequest) as Cv;
-  return new Promise((resolve, reject) => {
+const getBase64PDFFromTemplate = async (cvRequest: string | Cv) => {
+  let cv: Cv;
+  if (typeof cvRequest === 'string') {
+    cv = JSON.parse(cvRequest) as Cv;
+  } else {
+    cv = cvRequest;
+  }
+  return new Promise<string>((resolve, reject) => {
     // create a buffer
     pdf.create(helper(cv), { format: 'Letter' }).toBuffer((err, buffer) => {
       if (err) {
@@ -16,4 +21,23 @@ const getPDFFromTemplate = async (cvRequest: string) => {
   });
 };
 
-export { getPDFFromTemplate };
+const getFilePDFFromTemplate = async (cvRequest: string | Cv) => {
+  let cv: Cv;
+  if (typeof cvRequest === 'string') {
+    cv = JSON.parse(cvRequest) as Cv;
+  } else {
+    cv = cvRequest;
+  }
+  return new Promise<string>((resolve, reject) => {
+    // create a buffer
+    pdf.create(helper(cv), { format: 'Letter' }).toFile('./cv_file.pdf', (err, res) => {
+      if (err) {
+        console.log(err);
+        reject(err);
+      }
+      resolve(res.filename);
+    });
+  });
+};
+
+export { getBase64PDFFromTemplate, getFilePDFFromTemplate };
