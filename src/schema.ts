@@ -30,6 +30,7 @@ const typeDefs = gql`
     updatedAt: String
     score: Int
     downloadLink: String
+    template: String
   }
 
   type PersonalInfo {
@@ -85,7 +86,7 @@ const typeDefs = gql`
     recommendSkills(field: String!, typeOfSkills: String!): [FieldSkill]
     skills(field: String!, typeOfSkills: String!): [FieldSkill]
     fields: [String]
-    getPDF(cv: String): String
+    getPDF(cv: String, template: String): String
   }
 
   type Mutation {
