@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="utf-8" />
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        font-size: 12px;
+      }
+      .document {
+        display: flex;
+        width: 563px;
+        margin: 0 auto;
+        border: 2px solid #494948;
+        flex-direction: column;
+        border-radius: 5px;
+      }
+      .fullName {
+        font-weight: 700;
+        font-size: 25px;
+        color: white;
+      }
+      .content {
+        display: flex;
+        flex-direction: row-reverse;
+        color: white;
+      }
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 66%;
+        padding: 20px;
+        background-color: #404450;
+      }
+      .side-content {
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+        padding: 20px;
+        background-color: #88c9da;
+        color: #333;
+      }
+      .field {
+        border: 1px solid #88c9da;
+        border-right: transparent;
+      }
+      .field:nth-child(1n + 2) {
+        margin-top: 16px;
+      }
+      .fieldTitle {
+        margin-bottom: 16px;
+        font-size: 15px;
+        font-weight: 700;
+        color: #404450;
+      }
+      .fieldTitle-fancy {
+        font-size: 15px;
+        padding: 5px 24px;
+        font-weight: 700;
+        color: #404450;
+        background-color: #88c9da;
+      }
+      .fieldContent-fancy {
+        padding: 16px;
+      }
+      .fieldContent > *:nth-child(1n + 2) {
+        margin-top: 2px;
+      }
+      .fieldContentTitle {
+        font-weight: 700;
+        font-size: 15px;
+      }
+      .fieldContentTitle:nth-child(1n + 2) {
+        margin-top: 10px;
+      }
+      .contact-info {
+        display: flex;
+      }
+      .experience {
+        display: flex;
+      }
+      .experience:nth-child(2n) {
+        margin-top: 10px;
+      }
+      .experience-info > *:nth-child(2n) {
+        margin: 5px 0;
+      }
+      .experience-name {
+        font-size: 20px;
+      }
+      .experience-location {
+        font-style: italic;
+      }
+      .experience-period {
+        width: 30%;
+        font-weight: 700;
+        font-size: 12px;
+      }
+      .experience-endAt {
+        display: block;
+        margin-top: 5px;
+      }
+      .skills-content {
+        display: flex;
+        justify-content: space-around;
+        border: 1px solid red;
+      }
+      .skills-title {
+        text-align: center;
+        margin-bottom: 8px;
+      }
+      .skill {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .skill-name {
+        margin-right: 20px;
+        /* width: 50%; */
+        overflow-wrap: break-word;
+      }
+      .skill-rating {
+        display: flex;
+        justify-content: space-evenly;
+        width: 50px;
+      }
+      .skill-rating-fill {
+        width: 10px;
+        height: 5px;
+        background-color: #88c9da;
+      }
+      .skill-rating-blank {
+        width: 10px;
+        height: 5px;
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="document">
+      <div class="content">
+        <div class="main-content">
+          <div class="fullName">Paul Popa</div>
+
+          <div class="field">
+            <div class="fieldTitle-fancy">Experience</div>
+            <div class="fieldContent-fancy experiences">
+              <!-- map workExperiences -->
+              <div class="experience">
+                <div class="experience-period">
+                  <span class="experience-startAt">6/4/2021</span>
+                  -
+                  <span class="experience-endAt">7/15/2021</span>
+                </div>
+                <div class="experience-info">
+                  <div class="experience-name">Google</div>
+                  <div class="experience-location">Cluj-Napoca, Romania</div>
+                  <div class="experience-description">• Intern</div>
+                </div>
+              </div>
+              <div class="experience">
+                <div class="experience-period">
+                  <span class="experience-startAt">6/4/2021</span>
+                  -
+                  <span class="experience-endAt">7/15/2021</span>
+                </div>
+                <div class="experience-info">
+                  <div class="experience-name">Amazon</div>
+                  <div class="experience-location">Cluj-Napoca, Romania</div>
+                  <div class="experience-description">• Intern</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="fieldTitle-fancy">Education</div>
+            <div class="fieldContent-fancy experiences">
+              <!-- map educations -->
+              <div class="experience">
+                <div class="experience-period">
+                  <span class="experience-startAt">10/1/2018</span>
+                  -
+                  <span class="experience-endAt">PRESENT</span>
+                </div>
+                <div class="experience-info">
+                  <div class="experience-name">UBB</div>
+                  <div class="experience-location">Cluj-Napoca, Romania</div>
+                  <div class="experience-description">• Senior year</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="fieldTitle-fancy">Skills</div>
+            <div class="skills-content fieldContent-fancy">
+              <div class="skills-section">
+                <div class="skills-title">Hard</div>
+                <div class="fieldContent skills">
+                  <!-- map hardSkills -->
+                  <div class="skill">
+                    <div class="skill-name">AWS</div>
+                    <div class="skill-rating">
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-blank"></div>
+                      <div class="skill-rating-blank"></div>
+                    </div>
+                  </div>
+                  <div class="skill">
+                    <div class="skill-name">React.js</div>
+                    <div class="skill-rating">
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-blank"></div>
+                      <div class="skill-rating-blank"></div>
+                    </div>
+                  </div>
+                  <div class="skill">
+                    <div class="skill-name">React Native</div>
+                    <div class="skill-rating">
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-blank"></div>
+                      <div class="skill-rating-blank"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="skills-section">
+                <div class="skills-title">Soft</div>
+                <div class="fieldContent skills">
+                  <!-- map softSkills -->
+                  <div class="skill">
+                    <div class="skill-name">Communication</div>
+                    <div class="skill-rating">
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-blank"></div>
+                      <div class="skill-rating-blank"></div>
+                    </div>
+                  </div>
+                  <div class="skill">
+                    <div class="skill-name">Team player</div>
+                    <div class="skill-rating">
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-blank"></div>
+                    </div>
+                  </div>
+                  <div class="skill">
+                    <div class="skill-name">Fast learner</div>
+                    <div class="skill-rating">
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-fill"></div>
+                      <div class="skill-rating-blank"></div>
+                      <div class="skill-rating-blank"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-content">
+          <div class="field">
+            <div class="fieldTitle">About</div>
+            <div class="about">Hire me. I am eager to learn and want to discover new things.</div>
+          </div>
+          <div class="field">
+            <div class="fieldTitle">Contact</div>
+            <div class="divider"></div>
+            <div class="fieldContent contact">
+              <div class="contact-info">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  xmlns:svgjs="http://svgjs.com/svgjs"
+                  version="1.1"
+                  width="16"
+                  height="16"
+                  x="0"
+                  y="0"
+                  viewBox="0 0 512 512"
+                  style="enable-background: new 0 0 512 512"
+                  xml:space="preserve"
+                >
+                  <g>
+                    <g xmlns="http://www.w3.org/2000/svg">
+                      <g>
+                        <path
+                          d="M485.743,85.333H26.257C11.815,85.333,0,97.148,0,111.589V400.41c0,14.44,11.815,26.257,26.257,26.257h459.487    c14.44,0,26.257-11.815,26.257-26.257V111.589C512,97.148,500.185,85.333,485.743,85.333z M475.89,105.024L271.104,258.626    c-3.682,2.802-9.334,4.555-15.105,4.529c-5.77,0.026-11.421-1.727-15.104-4.529L36.109,105.024H475.89z M366.5,268.761    l111.59,137.847c0.112,0.138,0.249,0.243,0.368,0.368H33.542c0.118-0.131,0.256-0.23,0.368-0.368L145.5,268.761    c3.419-4.227,2.771-10.424-1.464-13.851c-4.227-3.419-10.424-2.771-13.844,1.457l-110.5,136.501V117.332l209.394,157.046    c7.871,5.862,17.447,8.442,26.912,8.468c9.452-0.02,19.036-2.6,26.912-8.468l209.394-157.046v275.534L381.807,256.367    c-3.42-4.227-9.623-4.877-13.844-1.457C363.729,258.329,363.079,264.534,366.5,268.761z"
+                          fill="#ffffff"
+                          data-original="#000000"
+                        />
+                      </g>
+                    </g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                    <g xmlns="http://www.w3.org/2000/svg"></g>
+                  </g>
+                </svg>
+                <div>ppir2643@scs.ubbcluj.ro</div>
+              </div>
+              <div class="contact-info">
+                <div>0700000000</div>
+              </div>
+              <div class="contact-info">
+                <div>adresa</div>
+              </div>
+              <div class="contact-info">
+                <div class="fieldContent websites">
+                  <!-- map websites -->
+                  <div>github</div>
+                  <div>linkedIn</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="fieldTitle">Languages</div>
+            <div class="divider"></div>
+            <div class="fieldContent languages">
+              <!-- map languages -->
+              <div>romanian</div>
+              <div>english</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
