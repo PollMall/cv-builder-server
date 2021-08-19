@@ -14,11 +14,17 @@
         font-size: 10px;
       }
       .document {
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
         width: 563px;
         margin: 0 auto;
         border: 2px solid #494948;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
         flex-direction: column;
+        -webkit-border-radius: 5px;
         border-radius: 5px;
       }
       .fullName {
@@ -27,20 +33,37 @@
         color: white;
       }
       .content {
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: reverse;
+        -webkit-flex-direction: row-reverse;
         flex-direction: row-reverse;
         color: white;
       }
       .main-content {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
         flex: 1;
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
         flex-direction: column;
         width: 66%;
         padding: 20px;
         background-color: #404450;
       }
       .side-content {
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
         flex-direction: column;
         width: 20%;
         padding: 20px;
@@ -82,7 +105,16 @@
         margin-top: 10px;
       }
       .contact-info {
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
+      }
+      .websites {
+        width: 100%;
+      }
+      .websites > * {
+        word-break: break-all;
+        width: 100%;
       }
       .breakable-text {
         width: 80%;
@@ -95,10 +127,11 @@
       .contact-info-icon {
         margin-right: 5px;
       }
-      .websites {
-        width: 80%;
-      }
       .languages {
+        width: 100%;
+      }
+      .languages > * {
+        word-break: break-all;
         width: 100%;
       }
       .small-mark {
@@ -106,22 +139,27 @@
         width: 5px;
         height: 5px;
         background-color: white;
+        -webkit-border-radius: 50%;
         border-radius: 50%;
         margin-right: 5px;
       }
       .iconContainer {
+        -webkit-box-sizing: border-box;
         box-sizing: border-box;
         position: absolute;
         top: -2px;
         left: -16px;
         padding: 8px;
         background-color: white;
+        -webkit-border-radius: 50%;
         border-radius: 50%;
       }
       .icon {
         display: block;
       }
       .experience {
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
         padding-left: 16px;
       }
@@ -150,6 +188,7 @@
         background-color: white;
         width: 8px;
         height: 8px;
+        -webkit-border-radius: 50%;
         border-radius: 50%;
       }
       .experience-endAt {
@@ -157,7 +196,11 @@
         margin-top: 5px;
       }
       .skills-content {
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
         justify-content: space-between;
       }
       .skills-section {
@@ -169,16 +212,27 @@
       }
       .skill {
         width: 100%;
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
         justify-content: space-between;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
         align-items: center;
       }
       .skill-name {
         margin-right: 20px;
-        word-break: break-all;
+        width: 50%;
+        word-wrap: break-word;
       }
       .skill-rating {
+        display: -webkit-box;
+        display: -webkit-flex;
         display: flex;
+        -webkit-box-pack: space-evenly;
+        -webkit-justify-content: space-evenly;
         justify-content: space-evenly;
         width: 50px;
       }
@@ -436,7 +490,7 @@
                 <div class="fieldContent skills">
                   <!-- map softSkills -->
                   <div class="skill">
-                    <div class="skill-name">Communication</div>
+                    <div class="skill-name">Attention to details</div>
                     <div class="skill-rating">
                       <div class="skill-rating-fill"></div>
                       <div class="skill-rating-fill"></div>
@@ -664,11 +718,11 @@
 
                 <div class="fieldContent websites">
                   <!-- map websites -->
-                  <div class="breakable-text">
+                  <div>
                     <div class="small-mark"></div>
-                    github
+                    https://github.com/PollMall
                   </div>
-                  <div class="breakable-text">
+                  <div>
                     <div class="small-mark"></div>
                     linkedIn
                   </div>
@@ -681,7 +735,7 @@
             <div class="fieldTitle">Languages</div>
             <div class="fieldContent languages">
               <!-- map languages -->
-              <div class="breakable-text">
+              <div>
                 <div class="small-mark"></div>
                 romanian
               </div>

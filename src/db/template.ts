@@ -2,10 +2,12 @@ import pdf from 'html-pdf';
 import { Cv } from './types';
 import { compact } from './templates/compact';
 import { normal } from './templates/normal';
+import { fancy } from './templates/fancy';
 
 enum Templates {
   NORMAL = 'NORMAL',
   COMPACT = 'COMPACT',
+  FANCY = 'FANCY',
 }
 
 const getHTMLTemplate = (cv: Cv, template: string) => {
@@ -14,6 +16,8 @@ const getHTMLTemplate = (cv: Cv, template: string) => {
       return normal(cv);
     case Templates.COMPACT:
       return compact(cv);
+    case Templates.FANCY:
+      return fancy(cv);
     default:
       throw new Error('Template does not exist');
   }
@@ -26,7 +30,7 @@ const getBase64PDFFromTemplate = async (cvRequest: string | Cv, template: string
   } else {
     cv = cvRequest;
   }
-  const html = getHTMLTemplate(cv, template);
+  const html = getHTMLTemplate(cv, template || Templates.NORMAL);
   return new Promise<string>((resolve, reject) => {
     // create a buffer
     pdf.create(html, { format: 'Letter' }).toBuffer((err, buffer) => {
