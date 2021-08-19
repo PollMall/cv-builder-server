@@ -26,6 +26,8 @@ interface Cv {
   createdAt: string;
   updatedAt: string;
   score: number;
+  downloadLink?: string;
+  template?: string;
 }
 
 interface PersonalInfo {

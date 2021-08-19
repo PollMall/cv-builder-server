@@ -1,8 +1,9 @@
-import { db } from '../firebase';
+import { bucket, db } from '../firebase';
 import { Cv, CvRequest, Education, User, WorkExperience } from './types';
 import { v4 as uuidv4 } from 'uuid';
 import { updatePopularity } from './skill';
 import { getDifference } from './utils';
+import { getFilePDFFromTemplate } from './template';
 
 const assignIds = (field: Education[] | WorkExperience[] | undefined) => {
   return field?.map((el) => (el.id ? el : { ...el, id: uuidv4() }));
@@ -31,6 +32,10 @@ const addCv = async (uuid: string, cv: string) => {
   //update popularity for hard/soft skills
   await updatePopularity(savedCv.field, [], savedCv.hardSkills, 'hardSkills');
   await updatePopularity(savedCv.field, [], savedCv.softSkills, 'softSkills');
+
+  //upload CV to Firebase Storage
+  uploadCVToStorage(uuid, savedCv);
+
   return savedCv;
 };
 
@@ -92,13 +97,17 @@ const updateCv = async (uuid: string, newCv: string) => {
     getDifference(savedCv.softSkills, prevSavedCv.softSkills),
     'softSkills',
   );
+
+  //upload CV to Firebase Storage
+  uploadCVToStorage(uuid, savedCv);
+
   return savedCv;
 };
 
 const readCv = async (uuid: string, cvId: string) => {
   const docRef = db.collection('users').doc(uuid);
   const { cvs } = (await docRef.get()).data() as User;
-  return cvs.find((c) => c.id === cvId);
+  return { ...cvs.find((c) => c.id === cvId), downloadLink: getPDFDownloadLink(uuid, cvId) };
 };
 
 const readAllCvs = async (uuid: string) => {
@@ -113,4 +122,23 @@ const readBestNCvs = async (uuid: string, noOfCvs: number) => {
   return cvs.sort((a, b) => b.score - a.score).slice(0, noOfCvs);
 };
 
-export { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs };
+/**
+ * @param uid the uid for which the CV belongs to
+ * @param cv the CV that will be uploaded
+ */
+const uploadCVToStorage = async (uid: string, cv: Cv) => {
+  if (!cv?.id) {
+    throw new Error('Could not upload to Storage. CV must have an id');
+  }
+  const pdfFile = await getFilePDFFromTemplate(cv);
+  await bucket.upload(pdfFile, { destination: `${uid}/${cv.id}.pdf` });
+  console.log('upload successfully');
+};
+
+const getPDFDownloadLink = async (uid: string, cvId: string) => {
+  const file = bucket.file(`${uid}/${cvId}.pdf`);
+  const res = await file.getSignedUrl({ action: 'read', expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
+  return res[0];
+};
+
+export { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs, uploadCVToStorage };

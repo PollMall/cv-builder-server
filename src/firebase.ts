@@ -4,6 +4,7 @@ import serviceAccount from '../cv-builder-4a6bd-firebase-adminsdk-tszt2-5f7c2683
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as ServiceAccount),
+  storageBucket: 'cv-builder-4a6bd.appspot.com',
 });
 
 const db = admin.firestore();
@@ -11,4 +12,6 @@ db.settings({ ignoreUndefinedProperties: true });
 
 const auth = admin.auth();
 
-export { db, auth };
+const bucket = admin.storage().bucket();
+
+export { db, auth, bucket };
