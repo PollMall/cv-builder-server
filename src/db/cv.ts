@@ -152,7 +152,6 @@ const uploadCVToStorage = async (uid: string, cv: Cv) => {
 const getPDFDownloadLink = async (uid: string, cvId: string) => {
   const file = bucket.file(`${uid}/${cvId}.pdf`);
   const res = await file.getSignedUrl({ action: 'read', expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
-  console.log(res.length);
   return res[0];
 };
 
