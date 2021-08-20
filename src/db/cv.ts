@@ -1,5 +1,5 @@
 import { bucket, db } from '../firebase';
-import { Cv, CvRequest, Education, User, WorkExperience } from './types';
+import { Cv, CvRequest, Education, Templates, User, WorkExperience } from './types';
 import { v4 as uuidv4 } from 'uuid';
 import { updatePopularity } from './skill';
 import { getDifference } from './utils';
@@ -24,17 +24,23 @@ const addCv = async (uuid: string, cv: string) => {
     createdAt: currentTime,
     updatedAt: currentTime,
     score: Math.round(Math.random() * 101),
+    template: Templates.NORMAL,
   } as Cv;
 
+  //upload CV to Firebase Storage
+  await uploadCVToStorage(uuid, savedCv);
+
+  //get download link
+  const downloadLink = await getPDFDownloadLink(uuid, savedCv.id);
+  savedCv.downloadLink = downloadLink;
+
+  //save cv in Firestore
   cvs.push(savedCv);
   await docRef.update({ cvs });
 
   //update popularity for hard/soft skills
   await updatePopularity(savedCv.field, [], savedCv.hardSkills, 'hardSkills');
   await updatePopularity(savedCv.field, [], savedCv.softSkills, 'softSkills');
-
-  //upload CV to Firebase Storage
-  uploadCVToStorage(uuid, savedCv);
 
   return savedCv;
 };
@@ -60,6 +66,9 @@ const deleteCv = async (uuid: string, cvId: string) => {
 
 const updateCv = async (uuid: string, newCv: string) => {
   const parsedNewCv = JSON.parse(newCv) as Cv;
+  console.log('updateCV');
+  console.log(uuid);
+  console.log(parsedNewCv.id);
   const savedCv = {
     ...parsedNewCv,
     educations: assignIds(parsedNewCv.educations),
@@ -68,6 +77,14 @@ const updateCv = async (uuid: string, newCv: string) => {
     score: Math.round(Math.random() * 101),
   } as Cv;
 
+  //upload CV to Firebase Storage
+  await uploadCVToStorage(uuid, savedCv);
+
+  //get download link
+  const downloadLink = await getPDFDownloadLink(uuid, savedCv.id);
+  savedCv.downloadLink = downloadLink;
+
+  //update cv in firestore
   const docRef = db.collection('users').doc(uuid);
   const { cvs } = (await docRef.get()).data() as User;
   let prevSavedCv: Cv;
@@ -97,9 +114,6 @@ const updateCv = async (uuid: string, newCv: string) => {
     getDifference(savedCv.softSkills, prevSavedCv.softSkills),
     'softSkills',
   );
-
-  //upload CV to Firebase Storage
-  uploadCVToStorage(uuid, savedCv);
 
   return savedCv;
 };
@@ -138,6 +152,7 @@ const uploadCVToStorage = async (uid: string, cv: Cv) => {
 const getPDFDownloadLink = async (uid: string, cvId: string) => {
   const file = bucket.file(`${uid}/${cvId}.pdf`);
   const res = await file.getSignedUrl({ action: 'read', expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
+  console.log(res.length);
   return res[0];
 };
 

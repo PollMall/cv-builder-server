@@ -1,14 +1,8 @@
 import pdf from 'html-pdf';
-import { Cv } from './types';
+import { Cv, Templates } from './types';
 import { compact } from './templates/compact';
 import { normal } from './templates/normal';
 import { fancy } from './templates/fancy';
-
-enum Templates {
-  NORMAL = 'NORMAL',
-  COMPACT = 'COMPACT',
-  FANCY = 'FANCY',
-}
 
 const getHTMLTemplate = (cv: Cv, template: string) => {
   switch (template) {

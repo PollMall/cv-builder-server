@@ -11,6 +11,12 @@ interface Credentials {
   expiresIn: number;
 }
 
+enum Templates {
+  NORMAL = 'NORMAL',
+  COMPACT = 'COMPACT',
+  FANCY = 'FANCY',
+}
+
 interface Cv {
   id: string;
   title: string;
@@ -27,7 +33,7 @@ interface Cv {
   updatedAt: string;
   score: number;
   downloadLink?: string;
-  template?: string;
+  template: string;
 }
 
 interface PersonalInfo {
@@ -98,4 +104,5 @@ export {
   PersonalInfo,
   FieldSkill,
   CvRequest,
+  Templates,
 };
