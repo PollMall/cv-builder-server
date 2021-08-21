@@ -23,7 +23,7 @@ const addCv = async (uuid: string, cv: string) => {
     feedback: false,
     createdAt: currentTime,
     updatedAt: currentTime,
-    score: Math.round(Math.random() * 101),
+    score: computeScore(parsedCv as Cv),
     template: Templates.NORMAL,
   } as Cv;
 
@@ -74,7 +74,7 @@ const updateCv = async (uuid: string, newCv: string) => {
     educations: assignIds(parsedNewCv.educations),
     workExperiences: assignIds(parsedNewCv.workExperiences),
     updatedAt: Date.now().toString(),
-    score: Math.round(Math.random() * 101),
+    score: computeScore(parsedNewCv as Cv),
   } as Cv;
 
   //upload CV to Firebase Storage
@@ -153,6 +153,109 @@ const getPDFDownloadLink = async (uid: string, cvId: string) => {
   const file = bucket.file(`${uid}/${cvId}.pdf`);
   const res = await file.getSignedUrl({ action: 'read', expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
   return res[0];
+};
+
+/**
+ *
+ * @param cv the cv that gets analyzed in order to compute the score
+ * @returns the score (a number between 0 and 100)
+ */
+
+const computeScore = (cv: Cv): number => {
+  const weights = {
+    personalInfo: 10,
+    locationInfo: 10,
+    languages: 10,
+    hardSkills: 20,
+    softSkills: 20,
+    educations: 10,
+    workExperiences: 20,
+  };
+  const scores = {
+    personalInfo: 0,
+    locationInfo: 0,
+    languages: 0,
+    hardSkills: 0,
+    softSkills: 0,
+    educations: 0,
+    workExperiences: 0,
+  };
+  const { personalInfo, locationInfo, languages, hardSkills, softSkills, educations, workExperiences } = cv;
+
+  //check for every field
+  if (personalInfo) {
+    scores.personalInfo = getScoreFromObject(personalInfo);
+  }
+  if (locationInfo) {
+    scores.locationInfo = getScoreFromObject(locationInfo);
+  }
+  if (languages) {
+    scores.languages = getScoreFromArray(languages, 2);
+  }
+  if (hardSkills) {
+    scores.hardSkills = getScoreFromArray(hardSkills, 4);
+  }
+  if (softSkills) {
+    scores.softSkills = getScoreFromArray(softSkills, 4);
+  }
+  if (educations) {
+    scores.educations = getScoreFromArray(educations);
+  }
+  if (workExperiences) {
+    scores.workExperiences = getScoreFromArray(workExperiences);
+  }
+
+  return Math.floor(weightedAvg(weights, scores) * 10);
+};
+
+/**
+ * Computes the weighted average based on given elements and their weights (elements and weights must be objects with the same key names)
+ * @param weights weights used for average (object)
+ * @param scores the scores that have weights (object)
+ * @returns the weighted average
+ */
+const weightedAvg = (weights: Record<string, any>, scores: Record<string, any>): number => {
+  let avg = 0;
+  let sum = 0;
+  for (const key in weights) {
+    avg += weights[key] * scores[key];
+    sum += weights[key];
+  }
+  return avg / sum;
+};
+
+/**
+ * Receives an object and returns the average (for every defined value for a key the grade is 10, otherwise 0)
+ * @param obj any object
+ * @returns the average for the keys that are defined
+ */
+const getScoreFromObject = (obj: Record<string, any>): number => {
+  if (!obj || Object.keys(obj).length === 0) {
+    return 0;
+  }
+  let avg = 0;
+  for (const key in obj) {
+    if (Array.isArray(obj[key])) {
+      avg += getScoreFromArray(obj[key]);
+    } else {
+      if (obj[key]) {
+        avg += 10;
+      }
+    }
+  }
+  return avg / Object.keys(obj).length;
+};
+
+/**
+ * Receives an array and returns the average
+ * @param obj any array
+ * @returns the average for the elements that are defined
+ */
+const getScoreFromArray = (arr: any[], minNoOfElements = 1): number => {
+  const scorePerUnit = 10 / minNoOfElements; // score per unit
+  const definedItems: [] = arr.reduce((newArr, el) => (el ? newArr.concat(el) : newArr), []); // defined items withing the array
+  const length = definedItems.length > minNoOfElements ? minNoOfElements : definedItems.length; // truncate the maximum length
+  return scorePerUnit * length;
 };
 
 export { addCv, deleteCv, updateCv, readCv, readAllCvs, readBestNCvs, uploadCVToStorage };
