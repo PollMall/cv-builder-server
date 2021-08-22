@@ -23,7 +23,7 @@ interface Cv {
   field: string;
   educations?: Education[];
   workExperiences?: WorkExperience[];
-  feedback: boolean;
+  feedback?: boolean;
   hardSkills?: HardSkill[];
   softSkills?: SoftSkill[];
   languages?: string[];

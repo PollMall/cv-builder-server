@@ -5,6 +5,9 @@ const resolve = (cb, ...params) => {
   try {
     return cb(...params);
   } catch (err) {
+    if (err.message) {
+      throw new ApolloError(err.message);
+    }
     throw new ApolloError(err);
   }
 };

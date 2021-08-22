@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { updatePopularity } from './skill';
 import { getDifference } from './utils';
 import { getFilePDFFromTemplate } from './template';
+import { validateCv, validateCvRequest } from './validation';
 
 const assignIds = (field: Education[] | WorkExperience[] | undefined) => {
   return field?.map((el) => (el.id ? el : { ...el, id: uuidv4() }));
@@ -14,6 +15,10 @@ const addCv = async (uuid: string, cv: string) => {
   const { cvs } = (await docRef.get()).data() as User;
 
   const parsedCv = JSON.parse(cv) as CvRequest;
+
+  // validate CV
+  await validateCvRequest(parsedCv);
+
   const currentTime = Date.now().toString();
   const savedCv = {
     ...parsedCv,
@@ -27,10 +32,10 @@ const addCv = async (uuid: string, cv: string) => {
     template: Templates.NORMAL,
   } as Cv;
 
-  //upload CV to Firebase Storage
+  // upload CV to Firebase Storage
   await uploadCVToStorage(uuid, savedCv);
 
-  //get download link
+  // get download link
   const downloadLink = await getPDFDownloadLink(uuid, savedCv.id);
   savedCv.downloadLink = downloadLink;
 
@@ -38,7 +43,7 @@ const addCv = async (uuid: string, cv: string) => {
   cvs.push(savedCv);
   await docRef.update({ cvs });
 
-  //update popularity for hard/soft skills
+  // update popularity for hard/soft skills
   await updatePopularity(savedCv.field, [], savedCv.hardSkills, 'hardSkills');
   await updatePopularity(savedCv.field, [], savedCv.softSkills, 'softSkills');
 
@@ -58,17 +63,22 @@ const deleteCv = async (uuid: string, cvId: string) => {
   });
   await docRef.update({ cvs: result });
 
-  //update popularity for hard/soft skills
+  // update popularity for hard/soft skills
   await updatePopularity(removedCv.field, removedCv.hardSkills, [], 'hardSkills');
   await updatePopularity(removedCv.field, removedCv.softSkills, [], 'softSkills');
+
+  // remove CV from Firebase Storage
+  await deleteCVFromStorage(uuid, cvId);
+
   return removedCv;
 };
 
 const updateCv = async (uuid: string, newCv: string) => {
   const parsedNewCv = JSON.parse(newCv) as Cv;
-  console.log('updateCV');
-  console.log(uuid);
-  console.log(parsedNewCv.id);
+
+  // validate CV
+  await validateCv(parsedNewCv);
+
   const savedCv = {
     ...parsedNewCv,
     educations: assignIds(parsedNewCv.educations),
@@ -77,14 +87,14 @@ const updateCv = async (uuid: string, newCv: string) => {
     score: computeScore(parsedNewCv as Cv),
   } as Cv;
 
-  //upload CV to Firebase Storage
+  // upload CV to Firebase Storage
   await uploadCVToStorage(uuid, savedCv);
 
-  //get download link
+  // get download link
   const downloadLink = await getPDFDownloadLink(uuid, savedCv.id);
   savedCv.downloadLink = downloadLink;
 
-  //update cv in firestore
+  // update cv in firestore
   const docRef = db.collection('users').doc(uuid);
   const { cvs } = (await docRef.get()).data() as User;
   let prevSavedCv: Cv;
@@ -101,7 +111,7 @@ const updateCv = async (uuid: string, newCv: string) => {
   }
   await docRef.update({ cvs: resultCvs });
 
-  //update popularity for hard/soft skills
+  // update popularity for hard/soft skills
   await updatePopularity(
     savedCv.field,
     getDifference(prevSavedCv.hardSkills, savedCv.hardSkills),
@@ -146,13 +156,21 @@ const uploadCVToStorage = async (uid: string, cv: Cv) => {
   }
   const pdfFile = await getFilePDFFromTemplate(cv);
   await bucket.upload(pdfFile, { destination: `${uid}/${cv.id}.pdf` });
-  console.log('upload successfully');
+  console.log('upload to storage successfully');
 };
 
 const getPDFDownloadLink = async (uid: string, cvId: string) => {
   const file = bucket.file(`${uid}/${cvId}.pdf`);
   const res = await file.getSignedUrl({ action: 'read', expires: new Date(Date.now() + 24 * 60 * 60 * 1000) });
   return res[0];
+};
+
+const deleteCVFromStorage = async (uid: string, cvId: string) => {
+  if (!cvId) {
+    throw new Error('Could not delete from Storage. CV id was not provided');
+  }
+  await bucket.file(`${uid}/${cvId}.pdf`).delete();
+  console.log('delete from storage successfully');
 };
 
 /**
@@ -182,7 +200,7 @@ const computeScore = (cv: Cv): number => {
   };
   const { personalInfo, locationInfo, languages, hardSkills, softSkills, educations, workExperiences } = cv;
 
-  //check for every field
+  // check for every field
   if (personalInfo) {
     scores.personalInfo = getScoreFromObject(personalInfo);
   }
