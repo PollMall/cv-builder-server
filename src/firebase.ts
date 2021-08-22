@@ -1,6 +1,6 @@
 import admin, { ServiceAccount } from 'firebase-admin';
 
-import serviceAccount from '../cv-builder-4a6bd-firebase-adminsdk-tszt2-5f7c26834f.json';
+// import serviceAccount from '../cv-builder-4a6bd-firebase-adminsdk-tszt2-5f7c26834f.json';
 
 const keys = {
   type: process.env.TYPE,
@@ -16,7 +16,7 @@ const keys = {
 };
 
 admin.initializeApp({
-  credential: admin.credential.cert((keys || serviceAccount) as ServiceAccount),
+  credential: admin.credential.cert(keys as ServiceAccount),
   storageBucket: 'cv-builder-4a6bd.appspot.com',
 });
 
