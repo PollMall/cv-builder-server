@@ -1,7 +1,8 @@
 import { db, auth } from '../firebase';
 import { Credentials, User } from './types';
-import API_KEY from '../apiKey.json';
 import fetch from 'node-fetch';
+
+const API_KEY = process.env.FIREBASE_KEY;
 
 const LOGIN_URL = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
 const TOKEN_URL = `https://securetoken.googleapis.com/v1/token?key=${API_KEY}`;
