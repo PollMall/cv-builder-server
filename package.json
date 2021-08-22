@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "This is the server for the cv-builder-app. It uses Google Firestore Database and ApolloServer for GraphQL.",
   "main": "index.js",
+  "engines": {
+    "node": ">=15.0.0",
+    "npm": ">=7.0.0"
+  },
   "scripts": {
     "start": "tsc && nodemon dist/src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
