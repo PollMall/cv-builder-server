@@ -8,7 +8,7 @@
     "npm": "7.x"
   },
   "scripts": {
-    "start": "node dist/src/app.js",
+    "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
   },
