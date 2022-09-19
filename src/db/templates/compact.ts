@@ -1,5 +1,5 @@
 import { Cv } from '../types';
-import { renderConditionally } from './helper';
+import { generateMultiLineText, renderConditionally } from './helper';
 
 const compact = (cv: Cv) => {
   const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
@@ -180,7 +180,10 @@ const compact = (cv: Cv) => {
   
         <div class="content">
           <div class="main-content">
-            ${renderConditionally(personalInfo?.about, `<div class="about">${personalInfo?.about}</div>`)}
+            ${renderConditionally(
+              personalInfo?.about,
+              `<div class="about">${generateMultiLineText(personalInfo?.about)}</div>`,
+            )}
             ${renderConditionally(
               workExperiences?.length,
               `

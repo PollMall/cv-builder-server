@@ -1,5 +1,5 @@
 import { Cv } from '../types';
-import { renderConditionally } from './helper';
+import { renderConditionally, generateMultiLineText } from './helper';
 
 const normal = (cv: Cv) => {
   const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
@@ -139,7 +139,10 @@ const normal = (cv: Cv) => {
       <div class="document">
         <div class="header">
           <div class="fullName">${personalInfo?.fullName}</div>
-          ${renderConditionally(personalInfo?.about, `<div class="about">${personalInfo?.about}</div>`)}
+          ${renderConditionally(
+            personalInfo?.about,
+            `<div class="about">${generateMultiLineText(personalInfo?.about)}</div>`,
+          )}
         </div>
   
         <div class="content">

@@ -1,5 +1,5 @@
 import { Cv } from '../types';
-import { renderConditionally } from './helper';
+import { renderConditionally, generateMultiLineText } from './helper';
 
 const fancy = (cv: Cv) => {
   const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
@@ -546,7 +546,7 @@ const fancy = (cv: Cv) => {
                 personalInfo?.about,
                 `
                 <div class="fieldTitle">About</div>
-                <div class="about">${personalInfo.about}</div>
+                <div class="about">${generateMultiLineText(personalInfo?.about)}</div>
               `,
               )}
             </div>

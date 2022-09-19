@@ -266,7 +266,7 @@ const getScoreFromObject = (obj: Record<string, any>): number => {
 
 /**
  * Receives an array and returns the average
- * @param obj any array
+ * @param arr any array
  * @returns the average for the elements that are defined
  */
 const getScoreFromArray = (arr: any[], minNoOfElements = 1): number => {
