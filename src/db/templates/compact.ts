@@ -32,6 +32,7 @@ const compact = (cv: Cv) => {
           flex-direction: column;
           -webkit-border-radius: 5px;
           border-radius: 5px;
+          overflow: hidden;
         }
         .header {
           display: -webkit-box;

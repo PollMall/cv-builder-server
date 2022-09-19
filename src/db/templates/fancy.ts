@@ -32,6 +32,7 @@ const fancy = (cv: Cv) => {
           flex-direction: column;
           -webkit-border-radius: 5px;
           border-radius: 5px;
+          overflow: hidden;
         }
         .fullName {
           font-weight: 700;
