@@ -353,9 +353,9 @@ const fancy = (cv: Cv) => {
                       }</span>
                     </div>
                     <div class="experience-info">
-                      <div class="experience-name">${we.name}</div>
-                      <div class="experience-location">${we.location}</div>
-                      <div class="experience-description">• ${we.description}</div>
+                      <div class="experience-name">${we?.name}</div>
+                      <div class="experience-location">${we?.location}</div>
+                      <div class="experience-description">${generateMultiLineText(we?.description)}</div>
                     </div>
                   </div>
                   `,
@@ -415,9 +415,9 @@ const fancy = (cv: Cv) => {
                       }</span>
                     </div>
                     <div class="experience-info">
-                      <div class="experience-name">${edu.name}</div>
-                      <div class="experience-location">${edu.location}</div>
-                      <div class="experience-description">• ${edu.description}</div>
+                      <div class="experience-name">${edu?.name}</div>
+                      <div class="experience-location">${edu?.location}</div>
+                      <div class="experience-description">${generateMultiLineText(edu?.description)}</div>
                     </div>
                   </div>
                   `,

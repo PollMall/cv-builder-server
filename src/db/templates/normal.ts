@@ -188,7 +188,7 @@ const normal = (cv: Cv) => {
                     `<div class="experience">
                       <span class="experience-name">${we.name}</span>
                       -
-                      <span class="experience-location">${we.location}</span>
+                      <span class="experience-location">${we?.location}</span>
                       <div class="experience-period">
                         <span class="experience-startAt">${
                           we.startAt ? new Date(parseInt(we.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
@@ -198,7 +198,7 @@ const normal = (cv: Cv) => {
                           we.endAt ? new Date(parseInt(we.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
                         }</span>
                       </div>
-                      <div class="experience-description">• ${we.description}</div>
+                      <div class="experience-description">${generateMultiLineText(we?.description)}</div>
                     </div>`,
                   '',
                 )}
@@ -220,7 +220,7 @@ const normal = (cv: Cv) => {
                     `<div class="experience">
                       <span class="experience-name">${edu.name}</span>
                       -
-                      <span class="experience-location">${edu.location}</span>
+                      <span class="experience-location">${edu?.location}</span>
                       <div class="experience-period">
                         <span class="experience-startAt">${
                           edu.startAt ? new Date(parseInt(edu.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
@@ -230,7 +230,7 @@ const normal = (cv: Cv) => {
                           edu.endAt ? new Date(parseInt(edu.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
                         }</span>
                       </div>
-                      <div class="experience-description">• ${edu.description}</div>
+                      <div class="experience-description">${generateMultiLineText(edu?.description)}</div>
                     </div>`,
                   '',
                 )}
