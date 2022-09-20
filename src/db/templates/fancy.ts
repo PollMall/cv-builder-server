@@ -1,5 +1,5 @@
 import { Cv } from '../types';
-import { renderConditionally, generateMultiLineText } from './helper';
+import { renderConditionally, generateMarkdownFromText } from './helper';
 
 const fancy = (cv: Cv) => {
   const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
@@ -18,12 +18,24 @@ const fancy = (cv: Cv) => {
         body {
           font-family: 'Roboto', sans-serif;
           font-size: 10px;
+          line-height: 1.35em;
+        }
+        ul, ol {
+          list-style-position: inside;
+          padding: 0;
+          margin: 0;
+        }
+        p {
+          margin: 0;
+        }
+        li {
+          transform: translateX(50%);
         }
         .document {
           display: -webkit-box;
           display: -webkit-flex;
           display: flex;
-          width: 563px;
+          width: 100%;
           margin: 0 auto;
           border: 2px solid #494948;
           -webkit-box-orient: vertical;
@@ -72,8 +84,8 @@ const fancy = (cv: Cv) => {
           -webkit-box-direction: normal;
           -webkit-flex-direction: column;
           flex-direction: column;
-          width: 20%;
-          padding: 20px;
+          width: 30%;
+          padding: 16px;
           background-color: #88c9da;
           color: #333;
         }
@@ -355,7 +367,7 @@ const fancy = (cv: Cv) => {
                     <div class="experience-info">
                       <div class="experience-name">${we?.name}</div>
                       <div class="experience-location">${we?.location}</div>
-                      <div class="experience-description">${generateMultiLineText(we?.description)}</div>
+                      <div class="experience-description">${generateMarkdownFromText(we?.description)}</div>
                     </div>
                   </div>
                   `,
@@ -417,7 +429,7 @@ const fancy = (cv: Cv) => {
                     <div class="experience-info">
                       <div class="experience-name">${edu?.name}</div>
                       <div class="experience-location">${edu?.location}</div>
-                      <div class="experience-description">${generateMultiLineText(edu?.description)}</div>
+                      <div class="experience-description">${generateMarkdownFromText(edu?.description)}</div>
                     </div>
                   </div>
                   `,
@@ -547,7 +559,7 @@ const fancy = (cv: Cv) => {
                 personalInfo?.about,
                 `
                 <div class="fieldTitle">About</div>
-                <div class="about">${generateMultiLineText(personalInfo?.about)}</div>
+                <div class="about">${generateMarkdownFromText(personalInfo?.about)}</div>
               `,
               )}
             </div>

@@ -1,6 +1,9 @@
+import MarkdownIt from 'markdown-it';
+
+const markdown = new MarkdownIt();
+
 const renderConditionally = (checkElement: unknown, contentToRender: string) => (checkElement ? contentToRender : '');
 
-const generateMultiLineText = (text: string) =>
-  text?.split('\n')?.reduce((html, line) => (html += `<div>${line}</div>`), '');
+const generateMarkdownFromText = (text: string) => markdown.render(text);
 
-export { renderConditionally, generateMultiLineText };
+export { renderConditionally, generateMarkdownFromText };

@@ -1,5 +1,5 @@
 import { Cv } from '../types';
-import { generateMultiLineText, renderConditionally } from './helper';
+import { renderConditionally, generateMarkdownFromText } from './helper';
 
 const compact = (cv: Cv) => {
   const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
@@ -18,12 +18,24 @@ const compact = (cv: Cv) => {
         body {
           font-family: 'Roboto', sans-serif;
           font-size: 13px;
+          line-height: 1.35em;
+        }
+        ul, ol {
+          list-style-position: inside;
+          padding: 0;
+          margin: 0;
+        }
+        p {
+          margin: 0;
+        }
+        li {
+          transform: translateX(50%);
         }
         .document {
           display: -webkit-box;
           display: -webkit-flex;
           display: flex;
-          width: 563px;
+          width: 100%;
           margin: 0 auto;
           border: 2px solid #494948;
           -webkit-box-orient: vertical;
@@ -102,7 +114,7 @@ const compact = (cv: Cv) => {
           display: block;
           width: 100%;
           height: 1px;
-          margin: 2px auto 15px;
+          margin: 4px auto 15px;
           background-color: rgb(192, 192, 192);
         }
         .experience {
@@ -183,7 +195,7 @@ const compact = (cv: Cv) => {
           <div class="main-content">
             ${renderConditionally(
               personalInfo?.about,
-              `<div class="about">${generateMultiLineText(personalInfo?.about)}</div>`,
+              `<div class="about">${generateMarkdownFromText(personalInfo?.about)}</div>`,
             )}
             ${renderConditionally(
               workExperiences?.length,
@@ -209,7 +221,7 @@ const compact = (cv: Cv) => {
                           <div class="experience-info">
                             <div class="experience-name">${we?.name}</div>
                             <div class="experience-location">${we?.location}</div>
-                            <div class="experience-description">${generateMultiLineText(we?.description)}</div>
+                            <div class="experience-description">${generateMarkdownFromText(we?.description)}</div>
                           </div>
                         </div>
                         `,
@@ -243,7 +255,7 @@ const compact = (cv: Cv) => {
                           <div class="experience-info">
                             <div class="experience-name">${edu.name}</div>
                             <div class="experience-location">${edu?.location}</div>
-                            <div class="experience-description">${generateMultiLineText(edu?.description)}</div>
+                            <div class="experience-description">${generateMarkdownFromText(edu?.description)}</div>
                           </div>
                         </div>
                         `,

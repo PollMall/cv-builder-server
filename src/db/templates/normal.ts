@@ -1,5 +1,5 @@
 import { Cv } from '../types';
-import { renderConditionally, generateMultiLineText } from './helper';
+import { renderConditionally, generateMarkdownFromText } from './helper';
 
 const normal = (cv: Cv) => {
   const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
@@ -11,12 +11,24 @@ const normal = (cv: Cv) => {
       <style>
         body {
           font-family: 'Times New Roman';
+          line-height: 1.35em;
+        }
+        ul, ol {
+          list-style-position: inside;
+          padding: 0;
+          margin: 0;
+        }
+        p {
+          margin: 0;
+        }
+        li {
+          transform: translateX(50%);
         }
         .document {
           display: -webkit-box;
           display: -webkit-flex;
           display: flex;
-          width: 563px;
+          width: 100%;
           margin: 0 auto;
           border: 2px solid #494948;
           -webkit-box-orient: vertical;
@@ -141,7 +153,7 @@ const normal = (cv: Cv) => {
           <div class="fullName">${personalInfo?.fullName}</div>
           ${renderConditionally(
             personalInfo?.about,
-            `<div class="about">${generateMultiLineText(personalInfo?.about)}</div>`,
+            `<div class="about">${generateMarkdownFromText(personalInfo?.about)}</div>`,
           )}
         </div>
   
@@ -198,7 +210,7 @@ const normal = (cv: Cv) => {
                           we.endAt ? new Date(parseInt(we.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
                         }</span>
                       </div>
-                      <div class="experience-description">${generateMultiLineText(we?.description)}</div>
+                      <div class="experience-description">${generateMarkdownFromText(we?.description)}</div>
                     </div>`,
                   '',
                 )}
@@ -230,7 +242,7 @@ const normal = (cv: Cv) => {
                           edu.endAt ? new Date(parseInt(edu.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
                         }</span>
                       </div>
-                      <div class="experience-description">${generateMultiLineText(edu?.description)}</div>
+                      <div class="experience-description">${generateMarkdownFromText(edu?.description)}</div>
                     </div>`,
                   '',
                 )}

@@ -48,7 +48,7 @@ const getFilePDFFromTemplate = async (cvRequest: string | Cv) => {
   const html = getHTMLTemplate(cv, template);
   return new Promise<string>((resolve, reject) => {
     // create a buffer
-    pdf.create(html, { format: 'Letter' }).toFile('./cv_file.pdf', (err, res) => {
+    pdf.create(html, { format: 'A4', width: '800px' }).toFile('./cv_file.pdf', (err, res) => {
       if (err) {
         console.log(err);
         reject(err);
