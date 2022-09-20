@@ -100,7 +100,6 @@ const updateCv = async (uuid: string, newCv: string) => {
   let prevSavedCv: Cv;
   const resultCvs = cvs.reduce((arr, c) => {
     if (c.id === savedCv.id) {
-      console.log('here');
       prevSavedCv = c;
       return arr.concat(savedCv);
     }
