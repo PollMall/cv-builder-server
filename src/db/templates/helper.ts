@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it';
 
-const markdown = new MarkdownIt();
+const markdown = new MarkdownIt({ breaks: true });
 
 const renderConditionally = (checkElement: unknown, contentToRender: string) => (checkElement ? contentToRender : '');
 
