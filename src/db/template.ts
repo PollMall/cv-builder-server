@@ -1,8 +1,6 @@
 import pdf from 'html-pdf';
 import { Cv, Templates } from './types';
-import { compact } from './templates/compact';
-import { normal } from './templates/normal';
-import { fancy } from './templates/fancy';
+import { compact, normal, fancy } from './templates';
 
 const getHTMLTemplate = (cv: Cv, template: string) => {
   switch (template) {
