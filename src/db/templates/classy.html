@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
       :root {
         --main-color: #2079c7;
         --text-color-normal: #343434;
@@ -20,6 +25,9 @@
         list-style-position: inside;
         padding: 0;
         margin: 0;
+      }
+      li {
+        margin: 2px;
       }
       p {
         margin: 0;
