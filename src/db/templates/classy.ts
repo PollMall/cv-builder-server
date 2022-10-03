@@ -50,8 +50,6 @@ export const classy = (cv: Cv) => {
               -ms-flex-direction: column;
                   flex-direction: column;
           width: 100%;
-          width: 8.5in;
-          min-height: 11in;
           margin: 0 auto;
           padding: 20px;
           -webkit-box-shadow: 0 0 4px 1px #ccc;
@@ -311,16 +309,9 @@ export const classy = (cv: Cv) => {
                 <div class="fieldTitle">Other Tools</div>
                 <div class="fieldContent skills">
                   <!-- map otherTools -->
-                  ${otherTools?.reduce(
-                    (html, ot) =>
-                      html +
-                      `
-                      <div class="skill">
-                        <div class="skill-name">${ot.name}</div>
-                      </div>
-                      `,
-                    '',
-                  )}
+                  ${otherTools
+                    ?.map((ot) => `<span class="skill"><span class="skill-name">${ot.name}</span></span>`)
+                    .join(', ')}
                 </div>
               </div>
               `,

@@ -1,8 +1,9 @@
 import pdf from 'html-pdf';
+import puppeteer from 'puppeteer';
 import { Cv, Templates } from './types';
 import { compact, normal, fancy, classy } from './templates';
 
-const getHTMLTemplate = (cv: Cv, template: string) => {
+const getHTMLTemplate = (cv: Cv, template: string = Templates.NORMAL) => {
   switch (template) {
     case Templates.NORMAL:
       return normal(cv);
@@ -11,11 +12,19 @@ const getHTMLTemplate = (cv: Cv, template: string) => {
     case Templates.FANCY:
       return fancy(cv);
     case Templates.CLASSY:
-      console.log(classy(cv));
       return classy(cv);
     default:
       throw new Error('Template does not exist');
   }
+};
+
+const createPDFFromHTML = async (html: string) => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.setContent(html);
+  const pdf = await page.pdf({ format: 'letter', printBackground: true });
+  await browser.close();
+  return pdf;
 };
 
 const getBase64PDFFromTemplate = async (cvRequest: string | Cv, template: string) => {
@@ -25,17 +34,9 @@ const getBase64PDFFromTemplate = async (cvRequest: string | Cv, template: string
   } else {
     cv = cvRequest;
   }
-  const html = getHTMLTemplate(cv, template || Templates.NORMAL);
-  return new Promise<string>((resolve, reject) => {
-    // create a buffer
-    pdf.create(html, { format: 'Letter' }).toBuffer((err, buffer) => {
-      if (err) {
-        console.log(err);
-        reject(err);
-      }
-      resolve(`data:application/pdf;base64,${buffer.toString('base64')}`);
-    });
-  });
+  const html = getHTMLTemplate(cv, template);
+  const bufferPDF = await createPDFFromHTML(html);
+  return `data:application/pdf;base64,${bufferPDF.toString('base64')}`;
 };
 
 const getFilePDFFromTemplate = async (cvRequest: string | Cv) => {
