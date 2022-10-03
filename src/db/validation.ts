@@ -33,25 +33,9 @@ const HardSkillSchema = yup.object({
 });
 const SoftSkillSchema = yup.object({
   name: yup.string().strict().required('Soft skill name is required'),
-  rating: yup.number().strict().required('Soft skill rating is required'),
 });
-const CvSchema = yup.object({
-  id: yup.string().uuid('ID not valid').required('ID is required'),
-  title: yup.string().required('Title is required'),
-  field: yup.string().required('Field is required'),
-  educations: yup.array().of(EducationSchema).notRequired(),
-  workExperiences: yup.array().of(WorkExperienceSchema).notRequired(),
-  feedback: yup.boolean().strict().notRequired(),
-  hardSkills: yup.array().of(HardSkillSchema).notRequired(),
-  softSkills: yup.array().of(SoftSkillSchema).notRequired(),
-  languages: yup.array().of(yup.string().required('Language cannot be empty')).notRequired(),
-  locationInfo: LocationInfoSchema,
-  personalInfo: PersonalInfoSchema,
-  createdAt: yup.string().strict().required('Create date required'),
-  updatedAt: yup.string().strict().required('Update date required'),
-  score: yup.number().strict().required('Score is required'),
-  downloadLink: yup.string().strict().notRequired(),
-  template: yup.string().oneOf(Object.keys(Templates), 'Template does not exist').required('Template is required'),
+const OtherToolsSchema = yup.object({
+  name: yup.string().strict().required('Soft skill name is required'),
 });
 const CvRequestSchema = yup.object({
   title: yup.string().required('Title is required'),
@@ -60,10 +44,22 @@ const CvRequestSchema = yup.object({
   workExperiences: yup.array().of(WorkExperienceSchema).notRequired(),
   hardSkills: yup.array().of(HardSkillSchema).notRequired(),
   softSkills: yup.array().of(SoftSkillSchema).notRequired(),
+  otherTools: yup.array().of(OtherToolsSchema).notRequired(),
   languages: yup.array().of(yup.string().required('Language cannot be empty')).notRequired(),
   locationInfo: LocationInfoSchema,
   personalInfo: PersonalInfoSchema,
 });
+const CvSchema = CvRequestSchema.concat(
+  yup.object({
+    id: yup.string().uuid('ID not valid').required('ID is required'),
+    feedback: yup.boolean().strict().notRequired(),
+    createdAt: yup.string().strict().required('Create date required'),
+    updatedAt: yup.string().strict().required('Update date required'),
+    score: yup.number().strict().required('Score is required'),
+    downloadLink: yup.string().strict().notRequired(),
+    template: yup.string().oneOf(Object.keys(Templates), 'Template does not exist').required('Template is required'),
+  }),
+);
 
 const validateCv = (cv: Cv) => CvSchema.validate(cv);
 

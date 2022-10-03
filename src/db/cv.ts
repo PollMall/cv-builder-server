@@ -43,9 +43,10 @@ const addCv = async (uuid: string, cv: string) => {
   cvs.push(savedCv);
   await docRef.update({ cvs });
 
-  // update popularity for hard/soft skills
+  // update popularity for skills
   await updatePopularity(savedCv.field, [], savedCv.hardSkills, 'hardSkills');
   await updatePopularity(savedCv.field, [], savedCv.softSkills, 'softSkills');
+  await updatePopularity(savedCv.field, [], savedCv.otherTools, 'otherTools');
 
   return savedCv;
 };
@@ -63,9 +64,10 @@ const deleteCv = async (uuid: string, cvId: string) => {
   });
   await docRef.update({ cvs: result });
 
-  // update popularity for hard/soft skills
+  // update popularity for skills
   await updatePopularity(removedCv.field, removedCv.hardSkills, [], 'hardSkills');
   await updatePopularity(removedCv.field, removedCv.softSkills, [], 'softSkills');
+  await updatePopularity(removedCv.field, removedCv.otherTools, [], 'otherTools');
 
   // remove CV from Firebase Storage
   await deleteCVFromStorage(uuid, cvId);
@@ -110,7 +112,7 @@ const updateCv = async (uuid: string, newCv: string) => {
   }
   await docRef.update({ cvs: resultCvs });
 
-  // update popularity for hard/soft skills
+  // update popularity for skills
   await updatePopularity(
     savedCv.field,
     getDifference(prevSavedCv.hardSkills, savedCv.hardSkills),
@@ -122,6 +124,12 @@ const updateCv = async (uuid: string, newCv: string) => {
     getDifference(prevSavedCv.softSkills, savedCv.softSkills),
     getDifference(savedCv.softSkills, prevSavedCv.softSkills),
     'softSkills',
+  );
+  await updatePopularity(
+    savedCv.field,
+    getDifference(prevSavedCv.otherTools, savedCv.otherTools),
+    getDifference(savedCv.otherTools, prevSavedCv.otherTools),
+    'otherTools',
   );
 
   return savedCv;
@@ -180,11 +188,12 @@ const deleteCVFromStorage = async (uid: string, cvId: string) => {
 
 const computeScore = (cv: Cv): number => {
   const weights = {
-    personalInfo: 10,
-    locationInfo: 10,
+    personalInfo: 5,
+    locationInfo: 5,
     languages: 10,
     hardSkills: 20,
     softSkills: 20,
+    otherTools: 10,
     educations: 10,
     workExperiences: 20,
   };
@@ -194,10 +203,11 @@ const computeScore = (cv: Cv): number => {
     languages: 0,
     hardSkills: 0,
     softSkills: 0,
+    otherTools: 0,
     educations: 0,
     workExperiences: 0,
   };
-  const { personalInfo, locationInfo, languages, hardSkills, softSkills, educations, workExperiences } = cv;
+  const { personalInfo, locationInfo, languages, hardSkills, softSkills, otherTools, educations, workExperiences } = cv;
 
   // check for every field
   if (personalInfo) {
@@ -214,6 +224,9 @@ const computeScore = (cv: Cv): number => {
   }
   if (softSkills) {
     scores.softSkills = getScoreFromArray(softSkills, 4);
+  }
+  if (otherTools) {
+    scores.otherTools = getScoreFromArray(otherTools, 2);
   }
   if (educations) {
     scores.educations = getScoreFromArray(educations);

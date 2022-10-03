@@ -335,16 +335,6 @@ const compact = (cv: Cv) => {
                       `
                       <div class="skill">
                         <div class="skill-name">${ss.name}</div>
-                        <div class="skill-rating">
-                          ${[...new Array(ss.rating)].reduce(
-                            (html) => html + '<div class="skill-rating-fill"></div>',
-                            '',
-                          )}
-                          ${[...new Array(5 - ss.rating)].reduce(
-                            (html) => html + '<div class="skill-rating-blank"></div>',
-                            '',
-                          )}
-                        </div>
                       </div>
                       `,
                     '',
