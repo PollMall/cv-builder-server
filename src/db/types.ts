@@ -15,6 +15,7 @@ enum Templates {
   NORMAL = 'NORMAL',
   COMPACT = 'COMPACT',
   FANCY = 'FANCY',
+  CLASSY = 'CLASSY',
 }
 
 interface Cv {

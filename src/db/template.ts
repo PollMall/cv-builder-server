@@ -1,6 +1,6 @@
 import pdf from 'html-pdf';
 import { Cv, Templates } from './types';
-import { compact, normal, fancy } from './templates';
+import { compact, normal, fancy, classy } from './templates';
 
 const getHTMLTemplate = (cv: Cv, template: string) => {
   switch (template) {
@@ -10,6 +10,9 @@ const getHTMLTemplate = (cv: Cv, template: string) => {
       return compact(cv);
     case Templates.FANCY:
       return fancy(cv);
+    case Templates.CLASSY:
+      console.log(classy(cv));
+      return classy(cv);
     default:
       throw new Error('Template does not exist');
   }
