@@ -25,7 +25,6 @@ const typeDefs = gql`
     softSkills: [SoftSkill]
     otherTools: [OtherTools]
     languages: [String]
-    locationInfo: LocationInfo
     personalInfo: PersonalInfo
     createdAt: String
     updatedAt: String
@@ -39,9 +38,6 @@ const typeDefs = gql`
     email: String
     phone: String
     about: String
-  }
-
-  type LocationInfo {
     address: String
     websites: [String]
   }

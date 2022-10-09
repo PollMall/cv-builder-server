@@ -2,7 +2,7 @@ import type { Cv } from '../types';
 import { renderConditionally, generateMarkdownFromText } from './helper';
 
 export const classy = (cv: Cv) => {
-  const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, otherTools, languages } = cv;
+  const { personalInfo, educations, workExperiences, hardSkills, softSkills, otherTools, languages } = cv;
 
   return `<!DOCTYPE html>
   <html>
@@ -255,15 +255,30 @@ export const classy = (cv: Cv) => {
           <div class="side-content">
             <div class="field">
               <div class="fieldContent contact">
-                <div>${locationInfo?.address}</div>
-                <div>${personalInfo?.phone}</div>
-                <div>${personalInfo?.email}</div>
                 ${renderConditionally(
-                  locationInfo?.websites?.length,
-                  `<div class="fieldContentTitle">Websites</div>
+                  personalInfo?.email,
+                  `
+                    <div>${personalInfo?.email}</div>
+                  `,
+                )}
+                ${renderConditionally(
+                  personalInfo?.phone,
+                  `
+                    <div>${personalInfo?.phone}</div>
+                  `,
+                )}
+                ${renderConditionally(
+                  personalInfo?.address,
+                  `
+                    <div>${personalInfo?.address}</div>
+                  `,
+                )}
+                ${renderConditionally(
+                  personalInfo?.websites?.length,
+                  `
                     <div class="fieldContent websites">
                       <!-- map websites -->
-                      ${locationInfo?.websites?.reduce((html, site) => html + `<div>${site}</div>`, '')}
+                      ${personalInfo?.websites?.reduce((html, site) => html + `<div>${site}</div>`, '')}
                     </div>
                   `,
                 )}

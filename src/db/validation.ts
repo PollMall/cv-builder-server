@@ -1,68 +1,105 @@
-import * as yup from 'yup';
+import * as Yup from 'yup';
 import { Cv, CvRequest, Templates } from './types';
 
-const PersonalInfoSchema = yup.object({
-  fullName: yup.string().required('Full name is required'),
-  email: yup.string().email('Email not valid').required('Email is required'),
-  phone: yup.string().notRequired(),
-  about: yup.string().notRequired(),
+const titleSchema = Yup.string().required('Title is required').default('');
+const fieldSchema = Yup.string().required('Field name is required').default('');
+const fullNameSchema = Yup.string().required('Full name is required').default('');
+const emailSchema = Yup.string().required('Email address is required').email('Field not valid').default('');
+const phoneSchema = Yup.string().required('Phone number is required').default('');
+const addressSchema = Yup.string().required('Address is required').default('');
+const websiteSchema = Yup.string().default('');
+const websitesSchema = Yup.array().of(websiteSchema).default([]);
+const aboutSchema = Yup.string().default('');
+const personalInfoSchema = Yup.object({
+  fullName: fullNameSchema,
+  email: emailSchema,
+  phone: phoneSchema,
+  about: aboutSchema,
+  address: addressSchema,
+  websites: websitesSchema,
 });
-const LocationInfoSchema = yup.object({
-  address: yup.string().required('Address is required'),
-  websites: yup.array().of(yup.string().required('Website cannot be empty')),
+const languageSchema = Yup.string().default('');
+const languagesSchema = Yup.array().of(languageSchema).default([]);
+const hardSkillSchema = Yup.object({
+  name: Yup.string(),
+  rating: Yup.number() as Yup.NumberSchema<number>,
+}).default({
+  name: '',
+  rating: 1,
 });
-const EducationSchema = yup.object({
-  id: yup.string().uuid().notRequired(),
-  name: yup.string().required('Education name is required'),
-  description: yup.string().notRequired(),
-  location: yup.string().notRequired(),
-  startAt: yup.string().strict().required('Education start date is required'),
-  endAt: yup.string().strict(),
+const hardSkillsSchema = Yup.array().of(hardSkillSchema).default([]);
+const otherToolSchema = Yup.object({
+  name: Yup.string(),
+}).default({
+  name: '',
 });
-const WorkExperienceSchema = yup.object({
-  id: yup.string().uuid().notRequired(),
-  name: yup.string().required('Work experience name is required'),
-  description: yup.string().notRequired(),
-  location: yup.string().notRequired(),
-  startAt: yup.string().strict().required('Work experience start date is required'),
-  endAt: yup.string().strict(),
+const otherToolsSchema = Yup.array().of(otherToolSchema).default([]);
+const softSkillSchema = Yup.object({
+  name: Yup.string(),
+}).default({
+  name: '',
 });
-const HardSkillSchema = yup.object({
-  name: yup.string().strict().required('Hard skill name is required'),
-  rating: yup.number().strict().required('Hard skill rating is required'),
+const softSkillsSchema = Yup.array().of(softSkillSchema).default([]);
+const educationSchema = Yup.object({
+  id: Yup.string().uuid().notRequired(),
+  name: Yup.string().required('Education name is required'),
+  description: Yup.string().notRequired(),
+  location: Yup.string().notRequired(),
+  startAt: Yup.string().strict().required('Education start date is required'),
+  endAt: Yup.string().strict(),
+  present: Yup.boolean().notRequired(),
+}).default({
+  name: '',
+  description: '',
+  location: '',
+  startAt: '',
+  endAt: '',
+  present: false,
 });
-const SoftSkillSchema = yup.object({
-  name: yup.string().strict().required('Soft skill name is required'),
+const workExperienceSchema = Yup.object({
+  id: Yup.string().uuid().notRequired(),
+  name: Yup.string().required('Work experience name is required'),
+  description: Yup.string().notRequired(),
+  location: Yup.string().notRequired(),
+  startAt: Yup.string().strict().required('Work experience start date is required'),
+  endAt: Yup.string().strict(),
+}).default({
+  name: '',
+  description: '',
+  location: '',
+  startAt: '',
+  endAt: '',
+  present: false,
 });
-const OtherToolsSchema = yup.object({
-  name: yup.string().strict().required('Soft skill name is required'),
+const educationsSchema = Yup.array().of(educationSchema).default([]);
+const workExperiencesSchema = Yup.array().of(workExperienceSchema).default([]);
+
+const cvRequestSchema = Yup.object({
+  title: titleSchema,
+  field: fieldSchema,
+  personalInfo: personalInfoSchema,
+  languages: languagesSchema,
+  hardSkills: hardSkillsSchema,
+  softSkills: softSkillsSchema,
+  otherTools: otherToolsSchema,
+  educations: educationsSchema,
+  workExperiences: workExperiencesSchema,
 });
-const CvRequestSchema = yup.object({
-  title: yup.string().required('Title is required'),
-  field: yup.string().required('Field is required'),
-  educations: yup.array().of(EducationSchema).notRequired(),
-  workExperiences: yup.array().of(WorkExperienceSchema).notRequired(),
-  hardSkills: yup.array().of(HardSkillSchema).notRequired(),
-  softSkills: yup.array().of(SoftSkillSchema).notRequired(),
-  otherTools: yup.array().of(OtherToolsSchema).notRequired(),
-  languages: yup.array().of(yup.string().required('Language cannot be empty')).notRequired(),
-  locationInfo: LocationInfoSchema,
-  personalInfo: PersonalInfoSchema,
-});
-const CvSchema = CvRequestSchema.concat(
-  yup.object({
-    id: yup.string().uuid('ID not valid').required('ID is required'),
-    feedback: yup.boolean().strict().notRequired(),
-    createdAt: yup.string().strict().required('Create date required'),
-    updatedAt: yup.string().strict().required('Update date required'),
-    score: yup.number().strict().required('Score is required'),
-    downloadLink: yup.string().strict().notRequired(),
-    template: yup.string().oneOf(Object.keys(Templates), 'Template does not exist').required('Template is required'),
+
+const cvSchema = cvRequestSchema.concat(
+  Yup.object({
+    id: Yup.string().uuid('ID not valid').required('ID is required'),
+    feedback: Yup.boolean().strict().notRequired(),
+    createdAt: Yup.string().strict().required('Create date required'),
+    updatedAt: Yup.string().strict().required('Update date required'),
+    score: Yup.number().strict().required('Score is required'),
+    downloadLink: Yup.string().strict().notRequired(),
+    template: Yup.string().oneOf(Object.keys(Templates), 'Template does not exist').required('Template is required'),
   }),
 );
 
-const validateCv = (cv: Cv) => CvSchema.validate(cv);
+const validateCv = (cv: Cv) => cvSchema.validate(cv);
 
-const validateCvRequest = (cvRequest: CvRequest) => CvRequestSchema.validate(cvRequest);
+const validateCvRequest = (cvRequest: CvRequest) => cvRequestSchema.validate(cvRequest);
 
 export { validateCv, validateCvRequest };

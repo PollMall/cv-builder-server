@@ -2,7 +2,7 @@ import { Cv } from '../types';
 import { renderConditionally, generateMarkdownFromText } from './helper';
 
 const compact = (cv: Cv) => {
-  const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
+  const { personalInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
 
   return `<!DOCTYPE html>
   <html>
@@ -272,18 +272,33 @@ const compact = (cv: Cv) => {
               <div class="fieldTitle">Personal Info</div>
               <div class="divider"></div>
               <div class="fieldContent contact">
-                <div class="fieldContentTitle">E-mail</div>
-                <div>${personalInfo?.email}</div>
-                <div class="fieldContentTitle">Phone</div>
-                <div>${personalInfo?.phone}</div>
-                <div class="fieldContentTitle">Address</div>
-                <div>${locationInfo?.address}</div>
                 ${renderConditionally(
-                  locationInfo?.websites?.length,
+                  personalInfo?.email,
+                  `
+                    <div class="fieldContentTitle">E-mail</div>
+                    <div>${personalInfo?.email}</div>
+                  `,
+                )}
+                ${renderConditionally(
+                  personalInfo?.phone,
+                  `
+                    <div class="fieldContentTitle">Phone</div>
+                    <div>${personalInfo?.phone}</div>
+                  `,
+                )}
+                ${renderConditionally(
+                  personalInfo?.address,
+                  `
+                    <div class="fieldContentTitle">Address</div>
+                    <div>${personalInfo?.address}</div>
+                  `,
+                )}
+                ${renderConditionally(
+                  personalInfo?.websites?.length,
                   `<div class="fieldContentTitle">Websites</div>
                   <div class="fieldContent websites">
                     <!-- map websites -->
-                    ${locationInfo?.websites?.reduce((html, site) => html + `<div>${site}</div>`, '')}
+                    ${personalInfo?.websites?.reduce((html, site) => html + `<div>${site}</div>`, '')}
                   </div>
                   `,
                 )}

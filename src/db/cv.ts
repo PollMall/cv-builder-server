@@ -188,8 +188,7 @@ const deleteCVFromStorage = async (uid: string, cvId: string) => {
 
 const computeScore = (cv: Cv): number => {
   const weights = {
-    personalInfo: 5,
-    locationInfo: 5,
+    personalInfo: 10,
     languages: 10,
     hardSkills: 20,
     softSkills: 20,
@@ -207,14 +206,11 @@ const computeScore = (cv: Cv): number => {
     educations: 0,
     workExperiences: 0,
   };
-  const { personalInfo, locationInfo, languages, hardSkills, softSkills, otherTools, educations, workExperiences } = cv;
+  const { personalInfo, languages, hardSkills, softSkills, otherTools, educations, workExperiences } = cv;
 
   // check for every field
   if (personalInfo) {
     scores.personalInfo = getScoreFromObject(personalInfo);
-  }
-  if (locationInfo) {
-    scores.locationInfo = getScoreFromObject(locationInfo);
   }
   if (languages) {
     scores.languages = getScoreFromArray(languages, 2);

@@ -1,7 +1,9 @@
-import pdf from 'html-pdf';
+import fs from 'fs';
 import puppeteer from 'puppeteer';
 import { Cv, Templates } from './types';
 import { compact, normal, fancy, classy } from './templates';
+
+const savePDFCvPath = './cv_file.pdf';
 
 const getHTMLTemplate = (cv: Cv, template: string = Templates.NORMAL) => {
   switch (template) {
@@ -48,14 +50,15 @@ const getFilePDFFromTemplate = async (cvRequest: string | Cv) => {
   }
   const template = cv.template ? cv.template : Templates.NORMAL;
   const html = getHTMLTemplate(cv, template);
+  const bufferPDF = await createPDFFromHTML(html);
   return new Promise<string>((resolve, reject) => {
     // create a buffer
-    pdf.create(html, { format: 'A4', width: '800px' }).toFile('./cv_file.pdf', (err, res) => {
+    fs.writeFile(savePDFCvPath, bufferPDF, (err) => {
       if (err) {
         console.log(err);
         reject(err);
       }
-      resolve(res.filename);
+      resolve(savePDFCvPath);
     });
   });
 };

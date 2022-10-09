@@ -2,7 +2,7 @@ import { Cv } from '../types';
 import { renderConditionally, generateMarkdownFromText } from './helper';
 
 const normal = (cv: Cv) => {
-  const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
+  const { personalInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
 
   return `<!DOCTYPE html>
   <html>
@@ -161,14 +161,29 @@ const normal = (cv: Cv) => {
           <div class="field">
             <div class="fieldTitle">Contact</div>
             <div class="fieldContent contact">
-              <div>${personalInfo?.email}</div>
-              <div>${personalInfo?.phone}</div>
-              <div>${locationInfo?.address}</div>
               ${renderConditionally(
-                locationInfo?.websites?.length,
+                personalInfo?.email,
+                `
+                <div>${personalInfo?.email}</div>
+              `,
+              )}
+              ${renderConditionally(
+                personalInfo?.phone,
+                `
+                <div>${personalInfo?.phone}</div>
+              `,
+              )}
+              ${renderConditionally(
+                personalInfo?.address,
+                `
+                <div>${personalInfo?.address}</div>
+              `,
+              )}
+              ${renderConditionally(
+                personalInfo?.websites?.length,
                 `<div class="fieldContent websites">
                   <!-- map websites -->
-                  ${locationInfo?.websites?.reduce((html, site) => html + `<div>${site}</div>`, '')}
+                  ${personalInfo?.websites?.reduce((html, site) => html + `<div>${site}</div>`, '')}
                 </div>`,
               )}
             </div>

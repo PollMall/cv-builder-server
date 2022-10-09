@@ -2,7 +2,7 @@ import { Cv } from '../types';
 import { renderConditionally, generateMarkdownFromText } from './helper';
 
 const fancy = (cv: Cv) => {
-  const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
+  const { personalInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
 
   return `<!DOCTYPE html>
   <html>
@@ -556,133 +556,150 @@ const fancy = (cv: Cv) => {
             <div class="field">
               <div class="fieldTitle">Contact</div>
               <div class="fieldContent contact">
-                <div class="contact-info">
-                  <svg
-                    class="contact-info-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    xmlns:svgjs="http://svgjs.com/svgjs"
-                    version="1.1"
-                    width="16"
-                    height="16"
-                    x="0"
-                    y="0"
-                    viewBox="0 0 512 512"
-                    style="enable-background: new 0 0 512 512"
-                    xml:space="preserve"
-                  >
-                    <g>
-                      <g xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                          <path
-                            d="M485.743,85.333H26.257C11.815,85.333,0,97.148,0,111.589V400.41c0,14.44,11.815,26.257,26.257,26.257h459.487    c14.44,0,26.257-11.815,26.257-26.257V111.589C512,97.148,500.185,85.333,485.743,85.333z M475.89,105.024L271.104,258.626    c-3.682,2.802-9.334,4.555-15.105,4.529c-5.77,0.026-11.421-1.727-15.104-4.529L36.109,105.024H475.89z M366.5,268.761    l111.59,137.847c0.112,0.138,0.249,0.243,0.368,0.368H33.542c0.118-0.131,0.256-0.23,0.368-0.368L145.5,268.761    c3.419-4.227,2.771-10.424-1.464-13.851c-4.227-3.419-10.424-2.771-13.844,1.457l-110.5,136.501V117.332l209.394,157.046    c7.871,5.862,17.447,8.442,26.912,8.468c9.452-0.02,19.036-2.6,26.912-8.468l209.394-157.046v275.534L381.807,256.367    c-3.42-4.227-9.623-4.877-13.844-1.457C363.729,258.329,363.079,264.534,366.5,268.761z"
-                            fill="#ffffff"
-                            data-original="#000000"
-                          />
-                        </g>
-                      </g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                    </g>
-                  </svg>
-                  <div class="breakable-text">${personalInfo.email}</div>
-                </div>
-                <div class="contact-info">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    xmlns:svgjs="http://svgjs.com/svgjs"
-                    version="1.1"
-                    width="16"
-                    height="16"
-                    x="0"
-                    y="0"
-                    viewBox="0 0 482.6 482.6"
-                    style="enable-background: new 0 0 512 512"
-                    xml:space="preserve"
-                    class="contact-info-icon"
-                  >
-                    <g>
-                      <g xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M98.339,320.8c47.6,56.9,104.9,101.7,170.3,133.4c24.9,11.8,58.2,25.8,95.3,28.2c2.3,0.1,4.5,0.2,6.8,0.2   c24.9,0,44.9-8.6,61.2-26.3c0.1-0.1,0.3-0.3,0.4-0.5c5.8-7,12.4-13.3,19.3-20c4.7-4.5,9.5-9.2,14.1-14   c21.3-22.2,21.3-50.4-0.2-71.9l-60.1-60.1c-10.2-10.6-22.4-16.2-35.2-16.2c-12.8,0-25.1,5.6-35.6,16.1l-35.8,35.8   c-3.3-1.9-6.7-3.6-9.9-5.2c-4-2-7.7-3.9-11-6c-32.6-20.7-62.2-47.7-90.5-82.4c-14.3-18.1-23.9-33.3-30.6-48.8   c9.4-8.5,18.2-17.4,26.7-26.1c3-3.1,6.1-6.2,9.2-9.3c10.8-10.8,16.6-23.3,16.6-36s-5.7-25.2-16.6-36l-29.8-29.8   c-3.5-3.5-6.8-6.9-10.2-10.4c-6.6-6.8-13.5-13.8-20.3-20.1c-10.3-10.1-22.4-15.4-35.2-15.4c-12.7,0-24.9,5.3-35.6,15.5l-37.4,37.4   c-13.6,13.6-21.3,30.1-22.9,49.2c-1.9,23.9,2.5,49.3,13.9,80C32.739,229.6,59.139,273.7,98.339,320.8z M25.739,104.2   c1.2-13.3,6.3-24.4,15.9-34l37.2-37.2c5.8-5.6,12.2-8.5,18.4-8.5c6.1,0,12.3,2.9,18,8.7c6.7,6.2,13,12.7,19.8,19.6   c3.4,3.5,6.9,7,10.4,10.6l29.8,29.8c6.2,6.2,9.4,12.5,9.4,18.7s-3.2,12.5-9.4,18.7c-3.1,3.1-6.2,6.3-9.3,9.4   c-9.3,9.4-18,18.3-27.6,26.8c-0.2,0.2-0.3,0.3-0.5,0.5c-8.3,8.3-7,16.2-5,22.2c0.1,0.3,0.2,0.5,0.3,0.8   c7.7,18.5,18.4,36.1,35.1,57.1c30,37,61.6,65.7,96.4,87.8c4.3,2.8,8.9,5,13.2,7.2c4,2,7.7,3.9,11,6c0.4,0.2,0.7,0.4,1.1,0.6   c3.3,1.7,6.5,2.5,9.7,2.5c8,0,13.2-5.1,14.9-6.8l37.4-37.4c5.8-5.8,12.1-8.9,18.3-8.9c7.6,0,13.8,4.7,17.7,8.9l60.3,60.2   c12,12,11.9,25-0.3,37.7c-4.2,4.5-8.6,8.8-13.3,13.3c-7,6.8-14.3,13.8-20.9,21.7c-11.5,12.4-25.2,18.2-42.9,18.2   c-1.7,0-3.5-0.1-5.2-0.2c-32.8-2.1-63.3-14.9-86.2-25.8c-62.2-30.1-116.8-72.8-162.1-127c-37.3-44.9-62.4-86.7-79-131.5   C28.039,146.4,24.139,124.3,25.739,104.2z"
-                          fill="#ffffff"
-                          data-original="#000000"
-                          style=""
-                          class=""
-                        />
-                      </g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                      <g xmlns="http://www.w3.org/2000/svg"></g>
-                    </g>
-                  </svg>
-                  <div class="breakable-text">${personalInfo.phone}</div>
-                </div>
-                <div class="contact-info">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    xmlns:svgjs="http://svgjs.com/svgjs"
-                    version="1.1"
-                    width="16"
-                    height="16"
-                    x="0"
-                    y="0"
-                    viewBox="0 0 512 512"
-                    style="enable-background: new 0 0 512 512"
-                    xml:space="preserve"
-                    class="contact-info-icon"
-                  >
-                    <g>
-                      <g xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="256" cy="165" r="75" fill="#ffffff" data-original="#000000" style="" class="" />
-                        <path
-                          d="m256 0c-81.108 0-165 61.714-165 165 0 94.351 147.217 274.08 153.472 281.609 2.856 3.413 7.075 5.391 11.528 5.391s8.672-1.978 11.528-5.391c6.255-7.529 153.472-187.258 153.472-281.609 0-90.981-74.019-165-165-165zm0 270c-57.891 0-105-47.109-105-105s47.109-105 105-105 105 47.109 105 105-47.109 105-105 105z"
-                          fill="#ffffff"
-                          data-original="#000000"
-                          style=""
-                          class=""
-                        />
-                        <path
-                          d="m357.087 377.811c-28.922 41.873-55.961 75.306-66.487 87.973-8.643 10.327-21.241 16.216-34.6 16.216s-25.957-5.889-34.541-16.143c-10.551-12.698-37.608-46.155-66.544-88.046-38.83 13.722-63.915 35.1-63.915 59.189 0 41.42 73.874 75 165 75s165-33.58 165-75c0-24.088-25.084-45.467-63.913-59.189z"
-                          fill="#ffffff"
-                          data-original="#000000"
-                          style=""
-                          class=""
-                        />
-                      </g>
-                    </g>
-                  </svg>
-                  <div class="breakable-text">${locationInfo.address}</div>
-                </div>
                 ${renderConditionally(
-                  locationInfo?.websites?.length,
+                  personalInfo?.email,
+                  `
+                    <div class="contact-info">
+                      <svg
+                        class="contact-info-icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xmlns:svgjs="http://svgjs.com/svgjs"
+                        version="1.1"
+                        width="16"
+                        height="16"
+                        x="0"
+                        y="0"
+                        viewBox="0 0 512 512"
+                        style="enable-background: new 0 0 512 512"
+                        xml:space="preserve"
+                      >
+                        <g>
+                          <g xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                              <path
+                                d="M485.743,85.333H26.257C11.815,85.333,0,97.148,0,111.589V400.41c0,14.44,11.815,26.257,26.257,26.257h459.487    c14.44,0,26.257-11.815,26.257-26.257V111.589C512,97.148,500.185,85.333,485.743,85.333z M475.89,105.024L271.104,258.626    c-3.682,2.802-9.334,4.555-15.105,4.529c-5.77,0.026-11.421-1.727-15.104-4.529L36.109,105.024H475.89z M366.5,268.761    l111.59,137.847c0.112,0.138,0.249,0.243,0.368,0.368H33.542c0.118-0.131,0.256-0.23,0.368-0.368L145.5,268.761    c3.419-4.227,2.771-10.424-1.464-13.851c-4.227-3.419-10.424-2.771-13.844,1.457l-110.5,136.501V117.332l209.394,157.046    c7.871,5.862,17.447,8.442,26.912,8.468c9.452-0.02,19.036-2.6,26.912-8.468l209.394-157.046v275.534L381.807,256.367    c-3.42-4.227-9.623-4.877-13.844-1.457C363.729,258.329,363.079,264.534,366.5,268.761z"
+                                fill="#ffffff"
+                                data-original="#000000"
+                              />
+                            </g>
+                          </g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                        </g>
+                      </svg>
+                      <div class="breakable-text">${personalInfo.email}</div>
+                    </div>
+                  `,
+                )}
+
+                  ${renderConditionally(
+                    personalInfo?.phone,
+                    `
+                    <div class="contact-info">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xmlns:svgjs="http://svgjs.com/svgjs"
+                        version="1.1"
+                        width="16"
+                        height="16"
+                        x="0"
+                        y="0"
+                        viewBox="0 0 482.6 482.6"
+                        style="enable-background: new 0 0 512 512"
+                        xml:space="preserve"
+                        class="contact-info-icon"
+                      >
+                        <g>
+                          <g xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M98.339,320.8c47.6,56.9,104.9,101.7,170.3,133.4c24.9,11.8,58.2,25.8,95.3,28.2c2.3,0.1,4.5,0.2,6.8,0.2   c24.9,0,44.9-8.6,61.2-26.3c0.1-0.1,0.3-0.3,0.4-0.5c5.8-7,12.4-13.3,19.3-20c4.7-4.5,9.5-9.2,14.1-14   c21.3-22.2,21.3-50.4-0.2-71.9l-60.1-60.1c-10.2-10.6-22.4-16.2-35.2-16.2c-12.8,0-25.1,5.6-35.6,16.1l-35.8,35.8   c-3.3-1.9-6.7-3.6-9.9-5.2c-4-2-7.7-3.9-11-6c-32.6-20.7-62.2-47.7-90.5-82.4c-14.3-18.1-23.9-33.3-30.6-48.8   c9.4-8.5,18.2-17.4,26.7-26.1c3-3.1,6.1-6.2,9.2-9.3c10.8-10.8,16.6-23.3,16.6-36s-5.7-25.2-16.6-36l-29.8-29.8   c-3.5-3.5-6.8-6.9-10.2-10.4c-6.6-6.8-13.5-13.8-20.3-20.1c-10.3-10.1-22.4-15.4-35.2-15.4c-12.7,0-24.9,5.3-35.6,15.5l-37.4,37.4   c-13.6,13.6-21.3,30.1-22.9,49.2c-1.9,23.9,2.5,49.3,13.9,80C32.739,229.6,59.139,273.7,98.339,320.8z M25.739,104.2   c1.2-13.3,6.3-24.4,15.9-34l37.2-37.2c5.8-5.6,12.2-8.5,18.4-8.5c6.1,0,12.3,2.9,18,8.7c6.7,6.2,13,12.7,19.8,19.6   c3.4,3.5,6.9,7,10.4,10.6l29.8,29.8c6.2,6.2,9.4,12.5,9.4,18.7s-3.2,12.5-9.4,18.7c-3.1,3.1-6.2,6.3-9.3,9.4   c-9.3,9.4-18,18.3-27.6,26.8c-0.2,0.2-0.3,0.3-0.5,0.5c-8.3,8.3-7,16.2-5,22.2c0.1,0.3,0.2,0.5,0.3,0.8   c7.7,18.5,18.4,36.1,35.1,57.1c30,37,61.6,65.7,96.4,87.8c4.3,2.8,8.9,5,13.2,7.2c4,2,7.7,3.9,11,6c0.4,0.2,0.7,0.4,1.1,0.6   c3.3,1.7,6.5,2.5,9.7,2.5c8,0,13.2-5.1,14.9-6.8l37.4-37.4c5.8-5.8,12.1-8.9,18.3-8.9c7.6,0,13.8,4.7,17.7,8.9l60.3,60.2   c12,12,11.9,25-0.3,37.7c-4.2,4.5-8.6,8.8-13.3,13.3c-7,6.8-14.3,13.8-20.9,21.7c-11.5,12.4-25.2,18.2-42.9,18.2   c-1.7,0-3.5-0.1-5.2-0.2c-32.8-2.1-63.3-14.9-86.2-25.8c-62.2-30.1-116.8-72.8-162.1-127c-37.3-44.9-62.4-86.7-79-131.5   C28.039,146.4,24.139,124.3,25.739,104.2z"
+                              fill="#ffffff"
+                              data-original="#000000"
+                              style=""
+                              class=""
+                            />
+                          </g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                          <g xmlns="http://www.w3.org/2000/svg"></g>
+                        </g>
+                      </svg>
+                      <div class="breakable-text">${personalInfo.phone}</div>
+                    </div>
+                    `,
+                  )}
+
+                  ${renderConditionally(
+                    personalInfo?.address,
+                    `
+                    <div class="contact-info">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        xmlns:svgjs="http://svgjs.com/svgjs"
+                        version="1.1"
+                        width="16"
+                        height="16"
+                        x="0"
+                        y="0"
+                        viewBox="0 0 512 512"
+                        style="enable-background: new 0 0 512 512"
+                        xml:space="preserve"
+                        class="contact-info-icon"
+                      >
+                        <g>
+                          <g xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="256" cy="165" r="75" fill="#ffffff" data-original="#000000" style="" class="" />
+                            <path
+                              d="m256 0c-81.108 0-165 61.714-165 165 0 94.351 147.217 274.08 153.472 281.609 2.856 3.413 7.075 5.391 11.528 5.391s8.672-1.978 11.528-5.391c6.255-7.529 153.472-187.258 153.472-281.609 0-90.981-74.019-165-165-165zm0 270c-57.891 0-105-47.109-105-105s47.109-105 105-105 105 47.109 105 105-47.109 105-105 105z"
+                              fill="#ffffff"
+                              data-original="#000000"
+                              style=""
+                              class=""
+                            />
+                            <path
+                              d="m357.087 377.811c-28.922 41.873-55.961 75.306-66.487 87.973-8.643 10.327-21.241 16.216-34.6 16.216s-25.957-5.889-34.541-16.143c-10.551-12.698-37.608-46.155-66.544-88.046-38.83 13.722-63.915 35.1-63.915 59.189 0 41.42 73.874 75 165 75s165-33.58 165-75c0-24.088-25.084-45.467-63.913-59.189z"
+                              fill="#ffffff"
+                              data-original="#000000"
+                              style=""
+                              class=""
+                            />
+                          </g>
+                        </g>
+                      </svg>
+                      <div class="breakable-text">${personalInfo.address}</div>
+                    </div>
+                    `,
+                  )}
+                ${renderConditionally(
+                  personalInfo?.websites?.length,
                   `
                     <div class="contact-info">
                     <svg
@@ -741,7 +758,7 @@ const fancy = (cv: Cv) => {
                     </svg>
                     <div class="fieldContent websites">
                       <!-- map websites -->
-                      ${locationInfo?.websites?.reduce(
+                      ${personalInfo?.websites?.reduce(
                         (html, site) =>
                           html +
                           `<div class="breakable-text">
