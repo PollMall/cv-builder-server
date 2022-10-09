@@ -1,8 +1,39 @@
-import type { Cv } from '../types';
+import type { Cv, Experience } from '../types';
 import { renderConditionally, generateMarkdownFromText } from './helper';
 
+const makeExperienceHTML = (title: string, experiences: Experience[]) => `
+  <div class="field">
+    <div class="fieldTitle">${title}</div>
+    <div class="fieldContent experiences">
+      <!-- map experiences -->
+      ${experiences?.reduce(
+        (html, exp) =>
+          html +
+          `<div class="experience">
+            ${renderConditionally(exp?.name, `<span class="experience-name">${exp?.name}</span>`)}
+            ${renderConditionally(exp?.location, `<span class="experience-location">, ${exp?.location}</span>`)}
+            ${renderConditionally(exp?.title, `<span class="experience-title"> - ${exp?.title}</span>`)}
+            <div class="experience-period">
+              <span class="experience-startAt">${
+                exp.startAt ? new Date(parseInt(exp.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
+              }</span>
+              -
+              <span class="experience-endAt">${
+                exp.endAt ? new Date(parseInt(exp.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
+              }</span>
+            </div>
+
+            <div class="experience-description">${generateMarkdownFromText(exp?.description)}</div>
+          </div>
+          `,
+        '',
+      )}
+    </div>
+  </div>
+`;
+
 export const classy = (cv: Cv) => {
-  const { personalInfo, educations, workExperiences, hardSkills, softSkills, otherTools, languages } = cv;
+  const { personalInfo, educations, workExperiences, projects, hardSkills, softSkills, otherTools, languages } = cv;
 
   return `<!DOCTYPE html>
   <html>
@@ -127,6 +158,10 @@ export const classy = (cv: Cv) => {
         .experience-location {
           color: var(--text-color-normal);
         }
+        .experience-title {
+          font-style: italic;
+          color: var(--text-color-normal);
+        }
         .experience-period {
           margin: 6px 0;
           font-size: 8pt;
@@ -186,69 +221,35 @@ export const classy = (cv: Cv) => {
               personalInfo?.about,
               `<div class="about">${generateMarkdownFromText(personalInfo?.about)}</div>`,
             )}
-  
-            ${renderConditionally(
-              workExperiences?.length,
-              `
-              <div class="field">
-                <div class="fieldTitle">Experience</div>
-                <div class="fieldContent experiences">
-                  <!-- map workExperiences -->
-                  ${workExperiences?.reduce(
-                    (html, we) =>
-                      html +
-                      `<div class="experience">
-                        <span class="experience-name">${we?.name}</span>,
-                        <span class="experience-location">${we?.location}</span>
-                        <div class="experience-period">
-                          <span class="experience-startAt">${
-                            we.startAt ? new Date(parseInt(we.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
-                          }</span>
-                          -
-                          <span class="experience-endAt">${
-                            we.endAt ? new Date(parseInt(we.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
-                          }</span>
-                        </div>
-        
-                        <div class="experience-description">${generateMarkdownFromText(we?.description)}</div>
-                      </div>
-                      `,
-                    '',
-                  )}
-                </div>
-              </div>`,
-            )}
+
+            ${renderConditionally(workExperiences?.length, makeExperienceHTML('Experience', workExperiences))}
+
+            ${renderConditionally(educations?.length, makeExperienceHTML('Education', educations))}
 
             ${renderConditionally(
-              educations?.length,
+              projects?.length,
               `
               <div class="field">
-                <div class="fieldTitle">Education</div>
+                <div class="fieldTitle">Projects</div>
                 <div class="fieldContent experiences">
-                  <!-- map educations -->
-                  ${educations?.reduce(
-                    (html, edu) =>
+                  <!-- map projects -->
+                  ${projects?.reduce(
+                    (html, project) =>
                       html +
                       `<div class="experience">
-                        <span class="experience-name">${edu?.name}</span>,
-                        <span class="experience-location">${edu?.location}</span>
-                        <div class="experience-period">
-                          <span class="experience-startAt">${
-                            edu.startAt ? new Date(parseInt(edu.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
-                          }</span>
-                          -
-                          <span class="experience-endAt">${
-                            edu.endAt ? new Date(parseInt(edu.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
-                          }</span>
-                        </div>
-        
-                        <div class="experience-description">${generateMarkdownFromText(edu?.description)}</div>
+                        ${renderConditionally(project?.name, `<span class="experience-name">${project?.name}</span>`)}
+                        ${renderConditionally(
+                          project?.title,
+                          `<span class="experience-title"> - ${project?.title}</span>`,
+                        )}
+                        <div class="experience-description">${generateMarkdownFromText(project?.description)}</div>
                       </div>
                       `,
                     '',
                   )}
                 </div>
-              </div>`,
+              </div>
+              `,
             )}
           </div>
   

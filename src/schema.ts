@@ -1,5 +1,15 @@
 import { gql } from 'apollo-server';
 
+const EXPERIENCE_FIELDS = `
+  id: String
+  name: String
+  description: String
+  location: String
+  title: String
+  startAt: String
+  endAt: String
+`;
+
 const typeDefs = gql`
   type User {
     uid: String
@@ -20,6 +30,7 @@ const typeDefs = gql`
     field: String
     educations: [Education]
     workExperiences: [WorkExperience]
+    projects: [Project]
     feedback: Boolean
     hardSkills: [HardSkill]
     softSkills: [SoftSkill]
@@ -43,21 +54,18 @@ const typeDefs = gql`
   }
 
   type Education {
-    id: String
-    name: String
-    description: String
-    location: String
-    startAt: String
-    endAt: String
+    ${EXPERIENCE_FIELDS}
   }
 
   type WorkExperience {
+    ${EXPERIENCE_FIELDS}
+  }
+
+  type Project {
     id: String
     name: String
     description: String
-    location: String
-    startAt: String
-    endAt: String
+    title: String
   }
 
   type HardSkill {

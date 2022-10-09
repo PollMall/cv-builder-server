@@ -1,12 +1,12 @@
 import { bucket, db } from '../firebase';
-import { Cv, CvRequest, Education, Templates, User, WorkExperience } from './types';
+import { Cv, CvRequest, Education, Templates, User, WorkExperience, Project } from './types';
 import { v4 as uuidv4 } from 'uuid';
 import { updatePopularity } from './skill';
 import { getDifference } from './utils';
 import { getFilePDFFromTemplate } from './template';
 import { validateCv, validateCvRequest } from './validation';
 
-const assignIds = (field: Education[] | WorkExperience[] | undefined) => {
+const assignIds = (field: Education[] | WorkExperience[] | Project[] | undefined) => {
   return field?.map((el) => (el.id ? el : { ...el, id: uuidv4() }));
 };
 
@@ -25,6 +25,7 @@ const addCv = async (uuid: string, cv: string) => {
     id: uuidv4(),
     educations: assignIds(parsedCv.educations),
     workExperiences: assignIds(parsedCv.workExperiences),
+    projects: assignIds(parsedCv.projects),
     feedback: false,
     createdAt: currentTime,
     updatedAt: currentTime,
@@ -85,6 +86,7 @@ const updateCv = async (uuid: string, newCv: string) => {
     ...parsedNewCv,
     educations: assignIds(parsedNewCv.educations),
     workExperiences: assignIds(parsedNewCv.workExperiences),
+    projects: assignIds(parsedNewCv.projects),
     updatedAt: Date.now().toString(),
     score: computeScore(parsedNewCv as Cv),
   } as Cv;
@@ -188,13 +190,14 @@ const deleteCVFromStorage = async (uid: string, cvId: string) => {
 
 const computeScore = (cv: Cv): number => {
   const weights = {
-    personalInfo: 10,
-    languages: 10,
-    hardSkills: 20,
-    softSkills: 20,
-    otherTools: 10,
-    educations: 10,
-    workExperiences: 20,
+    personalInfo: 8,
+    languages: 8,
+    hardSkills: 15,
+    softSkills: 15,
+    otherTools: 12,
+    educations: 12,
+    workExperiences: 15,
+    projects: 15,
   };
   const scores = {
     personalInfo: 0,
@@ -205,8 +208,9 @@ const computeScore = (cv: Cv): number => {
     otherTools: 0,
     educations: 0,
     workExperiences: 0,
+    projects: 0,
   };
-  const { personalInfo, languages, hardSkills, softSkills, otherTools, educations, workExperiences } = cv;
+  const { personalInfo, languages, hardSkills, softSkills, otherTools, educations, workExperiences, projects } = cv;
 
   // check for every field
   if (personalInfo) {
@@ -229,6 +233,9 @@ const computeScore = (cv: Cv): number => {
   }
   if (workExperiences) {
     scores.workExperiences = getScoreFromArray(workExperiences);
+  }
+  if (projects) {
+    scores.projects = getScoreFromArray(projects);
   }
 
   return Math.floor(weightedAvg(weights, scores) * 10);

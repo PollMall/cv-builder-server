@@ -30,8 +30,8 @@ export type PersonalInfo = {
 export type Experience = {
   id?: string;
   name: string;
-  description: string;
-  location: string;
+  description?: string;
+  location?: string;
   title?: string;
   startAt: string;
   endAt: string;
@@ -40,6 +40,13 @@ export type Experience = {
 export type Education = Experience;
 
 export type WorkExperience = Experience;
+
+export type Project = {
+  id?: string;
+  name: string;
+  description?: string;
+  title?: string;
+};
 
 export type RatableSkill = {
   name: string;
@@ -65,6 +72,7 @@ export type CvRequest = {
   field: string;
   educations?: Education[];
   workExperiences?: WorkExperience[];
+  projects?: Project[];
   hardSkills?: HardSkill[];
   softSkills?: SoftSkill[];
   otherTools?: OtherTool[];
