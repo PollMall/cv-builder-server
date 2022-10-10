@@ -10,9 +10,10 @@ const makeExperienceHTML = (title: string, experiences: Experience[]) => `
         (html, exp) =>
           html +
           `<div class="experience">
-            ${renderConditionally(exp?.name, `<span class="experience-name">${exp?.name}</span>`)}
-            ${renderConditionally(exp?.location, `<span class="experience-location">, ${exp?.location}</span>`)}
-            ${renderConditionally(exp?.title, `<span class="experience-title"> - ${exp?.title}</span>`)}
+            ${renderConditionally(exp?.name, `<span class="experience-name">${exp?.name}</span>`)}${renderConditionally(
+            exp?.location,
+            `<span class="experience-location">, ${exp?.location}</span>`,
+          )}${renderConditionally(exp?.title, `<span class="experience-title"> - ${exp?.title}</span>`)}
             <div class="experience-period">
               <span class="experience-startAt">${
                 exp.startAt ? new Date(parseInt(exp.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
@@ -237,11 +238,13 @@ export const classy = (cv: Cv) => {
                     (html, project) =>
                       html +
                       `<div class="experience">
-                        ${renderConditionally(project?.name, `<span class="experience-name">${project?.name}</span>`)}
                         ${renderConditionally(
-                          project?.title,
-                          `<span class="experience-title"> - ${project?.title}</span>`,
-                        )}
+                          project?.name,
+                          `<span class="experience-name">${project?.name}</span>`,
+                        )}${renderConditionally(
+                        project?.title,
+                        `<span class="experience-title"> - ${project?.title}</span>`,
+                      )}
                         <div class="experience-description">${generateMarkdownFromText(project?.description)}</div>
                       </div>
                       `,
