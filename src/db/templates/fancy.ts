@@ -117,14 +117,14 @@ const makeExperienceHTML = (title: string, experiences: Experience[], typeOfExpe
           html +
           `
       <div class="experience">
+        <div class="experience-mark"></div>
         <div class="experience-period">
-          <div class="experience-mark"></div>
           <span class="experience-startAt">${
             exp.startAt ? fromTimestampToMonthYearFormat(exp.startAt, { upperCaseMonthName: true }) : 'PRESENT'
           }</span>
           -
           <span class="experience-endAt">${
-            exp.endAt ? fromTimestampToMonthYearFormat(exp.startAt, { upperCaseMonthName: true }) : 'PRESENT'
+            exp.endAt ? fromTimestampToMonthYearFormat(exp.endAt, { upperCaseMonthName: true }) : 'PRESENT'
           }</span>
         </div>
         <div class="experience-info">
@@ -324,6 +324,7 @@ const fancy = (cv: Cv) => {
           display: -webkit-box;
           display: -webkit-flex;
           display: flex;
+          position: relative;
           padding-left: 16px;
         }
         .experience:nth-child(2n) {
@@ -339,7 +340,6 @@ const fancy = (cv: Cv) => {
           font-style: italic;
         }
         .experience-period {
-          position: relative;
           width: 30%;
           font-weight: 700;
           font-size: 12px;
@@ -347,7 +347,7 @@ const fancy = (cv: Cv) => {
         .experience-mark {
           position: absolute;
           top: 2px;
-          left: -36px;
+          left: -20px;
           background-color: white;
           width: 8px;
           height: 8px;
