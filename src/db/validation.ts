@@ -58,9 +58,9 @@ const makeExperienceFieldsValidation = (nameOfExperience: 'Education' | 'Work ex
   Yup.object({
     id: Yup.string().uuid().notRequired(),
     name: Yup.string().required(`${nameOfExperience} name is required`),
-    description: Yup.string().notRequired(),
-    location: Yup.string().notRequired(),
-    title: Yup.string().notRequired(),
+    description: Yup.string().notRequired().nullable(),
+    location: Yup.string().notRequired().nullable(),
+    title: Yup.string().notRequired().nullable(),
     startAt: Yup.string().strict().required(`${nameOfExperience} start date is required`),
     endAt: Yup.string().strict(),
     present: Yup.boolean().notRequired(),
@@ -83,8 +83,8 @@ const workExperiencesSchema = Yup.array().of(workExperienceSchema).default([]);
 const projectSchema = Yup.object({
   id: Yup.string().uuid().notRequired(),
   name: Yup.string().required(`Project name is required`),
-  description: Yup.string().notRequired(),
-  title: Yup.string().notRequired(),
+  description: Yup.string().notRequired().nullable(),
+  title: Yup.string().notRequired().nullable(),
 }).default({
   name: '',
   description: '',
