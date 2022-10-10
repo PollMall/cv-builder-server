@@ -102,7 +102,7 @@ const typeDefs = gql`
     signOutUser(uid: String!): Boolean
     registerUser(email: String!, password: String!, fullName: String!): User
     addCv(uid: String!, cv: String!): Cv
-    deleteCv(uid: String!, cvId: String!): Cv
+    deleteCv(uid: String!, cvId: String!): Boolean
     updateCv(uid: String!, newCv: String!): Cv
     refreshTokenUser(refreshToken: String!): Credentials
   }

@@ -71,9 +71,14 @@ const deleteCv = async (uuid: string, cvId: string) => {
   await updatePopularity(removedCv.field, removedCv.otherTools, [], 'otherTools');
 
   // remove CV from Firebase Storage
-  await deleteCVFromStorage(uuid, cvId);
+  try {
+    await deleteCVFromStorage(uuid, cvId);
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
 
-  return removedCv;
+  return true;
 };
 
 const updateCv = async (uuid: string, newCv: string) => {
