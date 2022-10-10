@@ -7,9 +7,12 @@ export const renderConditionally = (checkElement: unknown, contentToRender: stri
 
 export const generateMarkdownFromText = (text: string) => markdown.render(text);
 
-export const fromTimestampToMonthYearFormat = (stringDate: string, long?: string) => {
+export const fromTimestampToMonthYearFormat = (
+  stringDate: string,
+  options?: { longMonthName?: boolean; upperCaseMonthName?: boolean },
+) => {
   const date = new Date(parseInt(stringDate, 10));
-  const month = date.toLocaleString('default', { month: long ? 'long' : 'short' }).toUpperCase();
+  const month = date.toLocaleString('default', { month: options?.longMonthName ? 'long' : 'short' });
   const year = date.getFullYear();
-  return `${month} ${year}`;
+  return `${options?.upperCaseMonthName ? month.toUpperCase() : month} ${year}`;
 };

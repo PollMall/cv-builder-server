@@ -16,10 +16,12 @@ const makeExperienceHTML = (title: string, experiences: Experience[]) => `
           )}${renderConditionally(exp?.title, `<span class="experience-title"> - ${exp?.title}</span>`)}
             <div class="experience-period">
               <span class="experience-startAt">${
-                exp.startAt ? fromTimestampToMonthYearFormat(exp.startAt) : 'PRESENT'
+                exp.startAt ? fromTimestampToMonthYearFormat(exp.startAt, { upperCaseMonthName: true }) : 'PRESENT'
               }</span>
               -
-              <span class="experience-endAt">${exp.endAt ? fromTimestampToMonthYearFormat(exp.endAt) : 'PRESENT'}</span>
+              <span class="experience-endAt">${
+                exp.endAt ? fromTimestampToMonthYearFormat(exp.endAt, { upperCaseMonthName: true }) : 'PRESENT'
+              }</span>
             </div>
 
             <div class="experience-description">${generateMarkdownFromText(exp?.description)}</div>

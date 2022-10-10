@@ -1,5 +1,5 @@
 import { Cv, Experience } from '../types';
-import { renderConditionally, generateMarkdownFromText } from './helper';
+import { renderConditionally, generateMarkdownFromText, fromTimestampToMonthYearFormat } from './helper';
 
 const makeExperienceHTML = (title: string, experiences: Experience[]) => `
   <div class="field">
@@ -13,11 +13,9 @@ const makeExperienceHTML = (title: string, experiences: Experience[]) => `
           `<div class="experience">
             <div class="experience-period">
               <span class="experience-startAt">${
-                exp.startAt ? new Date(parseInt(exp.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
+                exp.startAt ? fromTimestampToMonthYearFormat(exp.startAt) : 'PRESENT'
               }</span> -
-              <span class="experience-endAt">${
-                exp.endAt ? new Date(parseInt(exp.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
-              }</span>
+              <span class="experience-endAt">${exp.endAt ? fromTimestampToMonthYearFormat(exp.endAt) : 'PRESENT'}</span>
             </div>
             <div class="experience-info">
               <span class="experience-name">${exp?.name}</span>${renderConditionally(
@@ -172,7 +170,6 @@ const compact = (cv: Cv) => {
         }
         .experience-period {
           width: 30%;
-          border: 1px solid red;
           font-weight: 700;
           font-size: 12px;
         }
