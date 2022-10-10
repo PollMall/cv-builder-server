@@ -174,11 +174,11 @@ export const classy = (cv: Cv) => {
           display: -ms-flexbox;
           display: flex;
           -webkit-box-pack: justify;
-              -ms-flex-pack: justify;
-                  justify-content: space-between;
+          -ms-flex-pack: justify;
+          justify-content: space-between;
           -webkit-box-align: center;
-              -ms-flex-align: center;
-                  align-items: center;
+          -ms-flex-align: center;
+          align-items: center;
         }
         .skill-name {
           color: var(--text-color-grey);
@@ -190,8 +190,8 @@ export const classy = (cv: Cv) => {
           display: -ms-flexbox;
           display: flex;
           -webkit-box-pack: justify;
-              -ms-flex-pack: justify;
-                  justify-content: space-between;
+          -ms-flex-pack: justify;
+          justify-content: space-between;
           width: 60px;
         }
         .skill-rating-fill {

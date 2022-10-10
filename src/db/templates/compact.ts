@@ -1,8 +1,46 @@
-import { Cv } from '../types';
+import { Cv, Experience } from '../types';
 import { renderConditionally, generateMarkdownFromText } from './helper';
 
+const makeExperienceHTML = (title: string, experiences: Experience[]) => `
+  <div class="field">
+    <div class="fieldTitle">Experience</div>
+    <div class="divider"></div>
+    <div class="fieldContent experiences">
+      <!-- map workExperiences -->
+      ${experiences?.reduce(
+        (html, exp) =>
+          html +
+          `<div class="experience">
+            <div class="experience-period">
+              <span class="experience-startAt">${
+                exp.startAt ? new Date(parseInt(exp.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
+              }</span> -
+              <span class="experience-endAt">${
+                exp.endAt ? new Date(parseInt(exp.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
+              }</span>
+            </div>
+            <div class="experience-info">
+              <span class="experience-name">${exp?.name}</span>${renderConditionally(
+            exp?.title,
+            `<span class="experience-title"> - ${exp?.title}</span>`,
+          )}
+              ${renderConditionally(exp?.location, `<div class="experience-location">${exp.location}</div>`)}
+              ${renderConditionally(
+                exp?.description,
+                `<div class="experience-description">${generateMarkdownFromText(exp.description)}</div>`,
+              )}
+              
+            </div>
+          </div>
+          `,
+        '',
+      )}
+    </div>
+  </div>
+`;
+
 const compact = (cv: Cv) => {
-  const { personalInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
+  const { personalInfo, educations, workExperiences, projects, hardSkills, softSkills, otherTools, languages } = cv;
 
   return `<!DOCTYPE html>
   <html>
@@ -27,9 +65,6 @@ const compact = (cv: Cv) => {
         }
         p {
           margin: 0;
-        }
-        li {
-          transform: translateX(50%);
         }
         .document {
           display: -webkit-box;
@@ -129,13 +164,15 @@ const compact = (cv: Cv) => {
           margin: 5px 0;
         }
         .experience-name {
-          font-size: 20px;
+          font-size: 12pt;
+          font-weight: 700;
         }
         .experience-location {
           font-style: italic;
         }
         .experience-period {
           width: 30%;
+          border: 1px solid red;
           font-weight: 700;
           font-size: 12px;
         }
@@ -145,18 +182,19 @@ const compact = (cv: Cv) => {
         }
         .skill {
           width: 100%;
+        }
+        .skill--newline {
           display: -webkit-box;
-          display: -webkit-flex;
+          display: -ms-flexbox;
           display: flex;
           -webkit-box-pack: justify;
-          -webkit-justify-content: space-between;
+          -ms-flex-pack: justify;
           justify-content: space-between;
           -webkit-box-align: center;
-          -webkit-align-items: center;
+          -ms-flex-align: center;
           align-items: center;
         }
         .skill-name {
-          margin-right: 20px;
           width: 50%;
           overflow-wrap: break-word;
         }
@@ -197,73 +235,37 @@ const compact = (cv: Cv) => {
               personalInfo?.about,
               `<div class="about">${generateMarkdownFromText(personalInfo?.about)}</div>`,
             )}
+            ${renderConditionally(workExperiences?.length, makeExperienceHTML('Experience', workExperiences))}
+
+            ${renderConditionally(educations?.length, makeExperienceHTML('Education', educations))}
+
             ${renderConditionally(
-              workExperiences?.length,
-              `
-                <div class="field">
-                  <div class="fieldTitle">Experience</div>
-                  <div class="divider"></div>
-                  <div class="fieldContent experiences">
-                    <!-- map workExperiences -->
-                    ${workExperiences?.reduce(
-                      (html, we) =>
-                        html +
-                        `<div class="experience">
-                          <div class="experience-period">
-                            <span class="experience-startAt">${
-                              we.startAt ? new Date(parseInt(we.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
-                            }</span>
-                            -
-                            <span class="experience-endAt">${
-                              we.endAt ? new Date(parseInt(we.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
-                            }</span>
-                          </div>
-                          <div class="experience-info">
-                            <div class="experience-name">${we?.name}</div>
-                            <div class="experience-location">${we?.location}</div>
-                            <div class="experience-description">${generateMarkdownFromText(we?.description)}</div>
-                          </div>
-                        </div>
-                        `,
-                      '',
-                    )}
-                  </div>
-                </div>
-              `,
-            )}
-            ${renderConditionally(
-              educations?.length,
-              `
-                <div class="field">
-                  <div class="fieldTitle">Education</div>
-                  <div class="divider"></div>
-                  <div class="fieldContent experiences">
-                    <!-- map workExperiences -->
-                    ${educations?.reduce(
-                      (html, edu) =>
-                        html +
-                        `<div class="experience">
-                          <div class="experience-period">
-                            <span class="experience-startAt">${
-                              edu.startAt ? new Date(parseInt(edu.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
-                            }</span>
-                            -
-                            <span class="experience-endAt">${
-                              edu.endAt ? new Date(parseInt(edu.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
-                            }</span>
-                          </div>
-                          <div class="experience-info">
-                            <div class="experience-name">${edu.name}</div>
-                            <div class="experience-location">${edu?.location}</div>
-                            <div class="experience-description">${generateMarkdownFromText(edu?.description)}</div>
-                          </div>
-                        </div>
-                        `,
-                      '',
-                    )}
-                  </div>
-                </div>
-              `,
+              projects?.length,
+              `<div class="field">
+                <div class="fieldTitle">Projects</div>
+                <div class="divider"></div>
+                <div class="fieldContent experiences">
+                  <!-- map projects -->
+                  ${projects?.reduce(
+                    (html, proj) =>
+                      html +
+                      `<div class="experience">
+                      <div class="experience-info">
+                        <span class="experience-name">${proj?.name}</span>${renderConditionally(
+                        proj?.title,
+                        `<span class="experience-title"> - ${proj?.title}</span>`,
+                      )}
+                        ${renderConditionally(
+                          proj?.description,
+                          `<div class="experience-description">${generateMarkdownFromText(proj.description)}</div>`,
+                        )}
+                      </div>
+                    </div>
+                    `,
+                    '',
+                  )}
+              </div>
+            </div>`,
             )}
           </div>
   
@@ -316,7 +318,7 @@ const compact = (cv: Cv) => {
                     (html, hs) =>
                       html +
                       `
-                      <div class="skill">
+                      <div class="skill skill--newline">
                         <div class="skill-name">${hs.name}</div>
                         <div class="skill-rating">
                           ${[...new Array(hs.rating)].reduce(
@@ -336,6 +338,23 @@ const compact = (cv: Cv) => {
               </div>
               `,
             )}
+
+            ${renderConditionally(
+              otherTools?.length,
+              `
+              <div class="field">
+                <div class="fieldTitle">Other Tools</div>
+                <div class="divider"></div>
+                <div class="fieldContent skills">
+                  <!-- map otherTools -->
+                  ${otherTools
+                    ?.map((ot) => `<span class="skill"><span class="skill-name">${ot.name}</span></span>`)
+                    .join(', ')}
+                </div>
+              </div>
+              `,
+            )}
+
             ${renderConditionally(
               softSkills?.length,
               `
