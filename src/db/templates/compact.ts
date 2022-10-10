@@ -3,10 +3,10 @@ import { renderConditionally, generateMarkdownFromText, fromTimestampToMonthYear
 
 const makeExperienceHTML = (title: string, experiences: Experience[]) => `
   <div class="field">
-    <div class="fieldTitle">Experience</div>
+    <div class="fieldTitle">${title}</div>
     <div class="divider"></div>
     <div class="fieldContent experiences">
-      <!-- map workExperiences -->
+      <!-- map experiences -->
       ${experiences?.reduce(
         (html, exp) =>
           html +
