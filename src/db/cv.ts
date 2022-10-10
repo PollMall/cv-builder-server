@@ -30,7 +30,7 @@ const addCv = async (uuid: string, cv: string) => {
     createdAt: currentTime,
     updatedAt: currentTime,
     score: computeScore(parsedCv as Cv),
-    template: Templates.NORMAL,
+    template: Templates.CLASSY,
   } as Cv;
 
   // upload CV to Firebase Storage

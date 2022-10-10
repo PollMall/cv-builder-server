@@ -1,14 +1,12 @@
 import fs from 'fs';
 import puppeteer from 'puppeteer';
 import { Cv, Templates } from './types';
-import { compact, normal, fancy, classy } from './templates';
+import { compact, fancy, classy } from './templates';
 
 const savePDFCvPath = './cv_file.pdf';
 
-const getHTMLTemplate = (cv: Cv, template: string = Templates.NORMAL) => {
+const getHTMLTemplate = (cv: Cv, template: string = Templates.CLASSY) => {
   switch (template) {
-    case Templates.NORMAL:
-      return normal(cv);
     case Templates.COMPACT:
       return compact(cv);
     case Templates.FANCY:
@@ -48,7 +46,7 @@ const getFilePDFFromTemplate = async (cvRequest: string | Cv) => {
   } else {
     cv = cvRequest;
   }
-  const template = cv.template ? cv.template : Templates.NORMAL;
+  const template = cv.template ? cv.template : Templates.CLASSY;
   const html = getHTMLTemplate(cv, template);
   const bufferPDF = await createPDFFromHTML(html);
   return new Promise<string>((resolve, reject) => {

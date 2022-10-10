@@ -258,9 +258,9 @@ export const classy = (cv: Cv) => {
             <div class="field">
               <div class="fieldContent contact">
                 ${renderConditionally(
-                  personalInfo?.email,
+                  personalInfo?.address,
                   `
-                    <div>${personalInfo?.email}</div>
+                    <div>${personalInfo?.address}</div>
                   `,
                 )}
                 ${renderConditionally(
@@ -270,9 +270,9 @@ export const classy = (cv: Cv) => {
                   `,
                 )}
                 ${renderConditionally(
-                  personalInfo?.address,
+                  personalInfo?.email,
                   `
-                    <div>${personalInfo?.address}</div>
+                    <div>${personalInfo?.email}</div>
                   `,
                 )}
                 ${renderConditionally(
