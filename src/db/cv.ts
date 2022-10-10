@@ -5,6 +5,7 @@ import { updatePopularity } from './skill';
 import { getDifference } from './utils';
 import { getFilePDFFromTemplate } from './template';
 import { validateCv, validateCvRequest } from './validation';
+import { descSortExperienceByStartAt } from './utils';
 
 const assignIds = (field: Education[] | WorkExperience[] | Project[] | undefined) => {
   return field?.map((el) => (el.id ? el : { ...el, id: uuidv4() }));
@@ -23,8 +24,8 @@ const addCv = async (uuid: string, cv: string) => {
   const savedCv = {
     ...parsedCv,
     id: uuidv4(),
-    educations: assignIds(parsedCv.educations),
-    workExperiences: assignIds(parsedCv.workExperiences),
+    educations: assignIds(parsedCv.educations).sort(descSortExperienceByStartAt),
+    workExperiences: assignIds(parsedCv.workExperiences).sort(descSortExperienceByStartAt),
     projects: assignIds(parsedCv.projects),
     feedback: false,
     createdAt: currentTime,
@@ -89,8 +90,8 @@ const updateCv = async (uuid: string, newCv: string) => {
 
   const savedCv = {
     ...parsedNewCv,
-    educations: assignIds(parsedNewCv.educations),
-    workExperiences: assignIds(parsedNewCv.workExperiences),
+    educations: assignIds(parsedNewCv.educations).sort(descSortExperienceByStartAt),
+    workExperiences: assignIds(parsedNewCv.workExperiences).sort(descSortExperienceByStartAt),
     projects: assignIds(parsedNewCv.projects),
     updatedAt: Date.now().toString(),
     score: computeScore(parsedNewCv as Cv),
