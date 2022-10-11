@@ -1,12 +1,12 @@
 import { db } from '../firebase';
-import { HardSkill, SoftSkill, OtherTools } from './types';
+import { HardSkill, SoftSkill, OtherTool } from './types';
 
 interface FieldSkill {
   name: string;
   popularity: number;
 }
 
-type TypeOfSkill = (HardSkill | SoftSkill | OtherTools)[];
+type TypeOfSkill = (HardSkill | SoftSkill | OtherTool)[];
 
 type TypeOfSkillName = 'hardSkills' | 'softSkills' | 'otherTools';
 
