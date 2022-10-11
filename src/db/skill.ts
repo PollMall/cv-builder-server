@@ -1,28 +1,32 @@
 import { db } from '../firebase';
-import { HardSkill, SoftSkill } from './types';
+import { HardSkill, SoftSkill, OtherTool } from './types';
 
 interface FieldSkill {
   name: string;
   popularity: number;
 }
 
-const flatCvSkills = (skills: HardSkill[] | SoftSkill[]) => {
+type TypeOfSkill = (HardSkill | SoftSkill | OtherTool)[];
+
+type TypeOfSkillName = 'hardSkills' | 'softSkills' | 'otherTools';
+
+const flatCvSkills = (skills: TypeOfSkill) => {
   return skills?.map((s) => s.name);
 };
 
 /**
- * This method should update popularity of every skills there are currently being used by any users
- * @param field the field that hardSkills/softSkills are related to
+ * This method should update popularity of every skill there is currently being used by any user
+ * @param field the field that hardSkills/softSkills/otherTools are related to
  * @param mustDeleteSkills skills that are in db but not in the update cv received from client
  * @param mustAddSkills skills that are in the updated cv sent from client but not in db
- * @param skillCategory a string representing the subcollection name (it must be either 'hardSkills' or 'softSkills')
+ * @param typeOfSkills a string representing the subcollection name (it must be either 'hardSkills', 'softSkills' or 'otherTools')
  */
 
 const updatePopularity = async (
   field: string,
-  mustDeleteSkills: HardSkill[] | SoftSkill[],
-  mustAddSkills: HardSkill[] | SoftSkill[],
-  typeOfSkills: 'hardSkills' | 'softSkills',
+  mustDeleteSkills: TypeOfSkill,
+  mustAddSkills: TypeOfSkill,
+  typeOfSkills: TypeOfSkillName,
 ) => {
   // get docs and collections ref
   const docRef = db.collection('fields').doc(field);
@@ -61,10 +65,10 @@ const updatePopularity = async (
 /**
  * This method returns the most 3 popular skills for a given field
  * @param field the field for providing the related skills
- * @param skillCategory a string representing the subcollection name (it must be either 'hardSkills' or 'softSkills')
+ * @param typeOfSkills a string representing the subcollection name (it must be either 'hardSkills', 'softSkills' or 'otherTools')
  */
 
-const recommendSkills = async (field: string, typeOfSkills: 'hardSkills' | 'softSkills') => {
+const recommendSkills = async (field: string, typeOfSkills: TypeOfSkillName) => {
   const skillsCol = db.collection('fields').doc(field).collection(typeOfSkills);
   const mostPopularSkillsDocs = await skillsCol.orderBy('popularity', 'desc').limit(3).get();
   const mostPopularSkills: FieldSkill[] = [];
@@ -72,7 +76,7 @@ const recommendSkills = async (field: string, typeOfSkills: 'hardSkills' | 'soft
   return mostPopularSkills;
 };
 
-const getSkills = async (field: string, typeOfSkills: 'hardSkills' | 'softSkills') => {
+const getSkills = async (field: string, typeOfSkills: TypeOfSkillName) => {
   const skillsCol = db.collection('fields').doc(field).collection(typeOfSkills);
   const skills: FieldSkill[] = [];
   (await skillsCol.get()).forEach((doc) => skills.push({ ...doc.data(), name: doc.id } as FieldSkill));

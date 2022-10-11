@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      :root {
+        --main-color: #2079c7;
+        --text-color-normal: #343434;
+        --text-color-grey: #666666;
+        --text-color-black: #000;
+      }
+      body {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.25em;
+        color: var(--text-color-normal);
+      }
+      ul,
+      ol {
+        list-style-position: inside;
+        padding: 0;
+        margin: 0;
+      }
+      li {
+        margin: 2px;
+      }
+      p {
+        margin: 0;
+      }
+      .document {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        width: 8.5in;
+        min-height: 11in;
+        margin: 0 auto;
+        padding: 20px;
+        box-shadow: 0 0 4px 1px #ccc;
+        overflow: hidden;
+      }
+      .header {
+        padding-bottom: 20px;
+      }
+      .fullName {
+        font-weight: 700;
+        font-size: 28pt;
+        color: var(--main-color);
+      }
+      .content {
+        display: flex;
+      }
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 66%;
+        padding: 20px;
+      }
+      .side-content {
+        display: flex;
+        flex-direction: column;
+        width: 33%;
+        padding: 20px;
+        color: var(--text-color-grey);
+      }
+      .contact {
+        color: var(--text-color-normal);
+      }
+      .contact > *:nth-child(1n + 2) {
+        font-weight: 700;
+      }
+      .websites {
+        margin-top: 16px !important;
+      }
+      .fieldTitle {
+        font-size: 12pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 20px 0;
+        color: var(--main-color);
+      }
+      .fieldContent > *:nth-child(1n + 2) {
+        margin-top: 2px;
+      }
+      .experience {
+        color: var(--text-color-grey);
+      }
+      .experience:nth-child(2n) {
+        margin-top: 10px;
+      }
+      .experience-name {
+        font-weight: 700;
+        color: var(--text-color-normal);
+      }
+      .experience-location {
+        color: var(--text-color-normal);
+      }
+      .experience-title {
+        font-style: italic;
+        color: var(--text-color-normal);
+      }
+      .experience-period {
+        margin: 6px 0;
+        font-size: 8pt;
+        color: var(--text-color-grey);
+      }
+      .skill {
+        width: 100%;
+      }
+      .skill--newline {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .skill-name {
+        color: var(--text-color-grey);
+        width: 50%;
+        overflow-wrap: break-word;
+      }
+      .skill-rating {
+        display: flex;
+        justify-content: space-between;
+        width: 60px;
+      }
+      .skill-rating-fill {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--main-color);
+      }
+      .skill-rating-blank {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="document">
+      <div class="content">
+        <div class="main-content">
+          <div class="header">
+            <div class="fullName">Paul Popa</div>
+          </div>
+
+          <div class="about">
+            <p>
+              Hard-working frontend engineer with <strong>over 1 years of experience</strong>, solving physical problems
+              by proposing adequate digital solutions. Developed and maintained web components for a large
+              pharmaceutical company therefore maximizing the creation of new brand websites. Contributed to the
+              frontend side of the platform of a leading company in the AIOps industry. Using modern frontend tools and
+              frameworks for achieving business goals while being involved in scrum meetings.
+            </p>
+          </div>
+
+          <div class="field">
+            <div class="fieldTitle">Experience</div>
+            <div class="fieldContent experiences">
+              <!-- map workExperiences -->
+              <div class="experience">
+                <span class="experience-name">Modus Create Inc.</span>
+                <span class="experience-location">, Cluj-Napoca</span>
+                <span class="experience-title"> - Junior Frontend Engineer</span>
+                <div class="experience-period">
+                  <span class="experience-startAt">7/1/2021</span>
+                  -
+                  <span class="experience-endAt">PRESENT</span>
+                </div>
+
+                <div class="experience-description">
+                  <ul>
+                    <li>Collaborated with UI/UX designers in an Agile environment</li>
+                    <li>
+                      Built responsive and highly customizable web components with the ability of drag &amp; drop using
+                      Stencil.js, Grapes.js and SCSS.
+                    </li>
+                    <li>Contributed to the internal project started during internship.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="experience">
+                <span class="experience-name">Modus Create Inc.</span>
+                <span class="experience-location">, Cluj-Napoca</span>
+                <span class="experience-title"> - Frontend Intern</span>
+                <div class="experience-period">
+                  <span class="experience-startAt">2/22/2021</span>
+                  -
+                  <span class="experience-endAt">7/1/2021</span>
+                </div>
+
+                <div class="experience-description">
+                  <ul>
+                    <li>
+                      Developed a job portal application for learning purposes using React, Material-UI and Apollo
+                      Client (for communication with a GraphQL server) and unit tested with React Testing Library and
+                      Jest.
+                    </li>
+                    <li>
+                      Worked on an internal project built in React with TypeScript, Material-UI and AWS Amplify,
+                      designed to help internal stakeholders manage information about employees.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="fieldTitle">Education</div>
+            <div class="fieldContent experiences">
+              <!-- map workExperiences -->
+              <div class="experience">
+                <span class="experience-name">
+                  Babes-Bolyai University, Faculty of Mathematics and Computer Science, Bachelor's Degree</span
+                >
+                <span class="experience-location">, Cluj-Napoca</span>
+                <span class="experience-title"> - Bachelor's degree</span>
+                <div class="experience-description"></div>
+                <div class="experience-period">
+                  <span class="experience-startAt">10/1/2018</span>
+                  -
+                  <span class="experience-endAt">6/1/2021</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-content">
+          <div class="field">
+            <div class="fieldContent contact">
+              <div>Nicolae Balcescu Boulevard, no. 25, Deva, Hunedoara, Romania</div>
+              <div>(+40) 773 700 975</div>
+              <div>16paul.popa@gmail.com</div>
+              <div class="websites">
+                <!-- map websites -->
+                <div>github.com/PollMall</div>
+                <div>linkedin.com/in/paul-popa16</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="fieldTitle">Skills</div>
+            <div class="fieldContent skills">
+              <!-- map hardSkills -->
+              <div class="skill skill--newline">
+                <div class="skill-name">TypeScript</div>
+                <div class="skill-rating">
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-blank"></div>
+                  <div class="skill-rating-blank"></div>
+                </div>
+              </div>
+
+              <div class="skill skill--newline">
+                <div class="skill-name">HTML</div>
+                <div class="skill-rating">
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                </div>
+              </div>
+
+              <div class="skill skill--newline">
+                <div class="skill-name">CSS</div>
+                <div class="skill-rating">
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                </div>
+              </div>
+
+              <div class="skill skill--newline">
+                <div class="skill-name">React.js</div>
+                <div class="skill-rating">
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-blank"></div>
+                </div>
+              </div>
+
+              <div class="skill skill--newline">
+                <div class="skill-name">GraphQL</div>
+                <div class="skill-rating">
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-blank"></div>
+                  <div class="skill-rating-blank"></div>
+                </div>
+              </div>
+
+              <div class="skill skill--newline">
+                <div class="skill-name">Node.js</div>
+                <div class="skill-rating">
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-fill"></div>
+                  <div class="skill-rating-blank"></div>
+                  <div class="skill-rating-blank"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="fieldTitle">Other Tools</div>
+            <div class="fieldContent skills">
+              <!-- map otherTools -->
+
+              <span class="skill"><span class="skill-name">Git</span></span
+              >, <span class="skill"><span class="skill-name">NPM</span></span
+              >, <span class="skill"><span class="skill-name">React Testing Library</span></span
+              >, <span class="skill"><span class="skill-name">Jest</span></span
+              >, <span class="skill"><span class="skill-name">ESLint</span></span
+              >,
+              <span class="skill">
+                <span class="skill-name">Material-UI</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="fieldTitle">Interpersonal Skills</div>
+            <div class="fieldContent skills">
+              <!-- map softSkills -->
+
+              <div class="skill">
+                <div class="skill-name">Team-player</div>
+              </div>
+
+              <div class="skill">
+                <div class="skill-name">Fast learner</div>
+              </div>
+
+              <div class="skill">
+                <div class="skill-name">Attention to detail</div>
+              </div>
+
+              <div class="skill">
+                <div class="skill-name">Problem solver</div>
+              </div>
+
+              <div class="skill">
+                <div class="skill-name">Flexibility</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="fieldTitle">Languages</div>
+            <div class="fieldContent languages">
+              <!-- map languages -->
+              <div>Romanian</div>
+              <div>English</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

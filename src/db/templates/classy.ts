@@ -1,34 +1,30 @@
-import { Cv, Experience } from '../types';
+import type { Cv, Experience } from '../types';
 import { renderConditionally, generateMarkdownFromText, fromTimestampToMonthYearFormat } from './helper';
 
 const makeExperienceHTML = (title: string, experiences: Experience[]) => `
   <div class="field">
     <div class="fieldTitle">${title}</div>
-    <div class="divider"></div>
     <div class="fieldContent experiences">
       <!-- map experiences -->
       ${experiences?.reduce(
         (html, exp) =>
           html +
           `<div class="experience">
+            ${renderConditionally(exp?.name, `<span class="experience-name">${exp?.name}</span>`)}${renderConditionally(
+            exp?.location,
+            `<span class="experience-location">, ${exp?.location}</span>`,
+          )}${renderConditionally(exp?.title, `<span class="experience-title"> - ${exp?.title}</span>`)}
             <div class="experience-period">
               <span class="experience-startAt">${
-                exp.startAt ? fromTimestampToMonthYearFormat(exp.startAt) : 'PRESENT'
-              }</span> -
-              <span class="experience-endAt">${exp.endAt ? fromTimestampToMonthYearFormat(exp.endAt) : 'PRESENT'}</span>
+                exp.startAt ? fromTimestampToMonthYearFormat(exp.startAt, { upperCaseMonthName: true }) : 'PRESENT'
+              }</span>
+              -
+              <span class="experience-endAt">${
+                exp.endAt ? fromTimestampToMonthYearFormat(exp.endAt, { upperCaseMonthName: true }) : 'PRESENT'
+              }</span>
             </div>
-            <div class="experience-info">
-              <span class="experience-name">${exp?.name}</span>${renderConditionally(
-            exp?.title,
-            `<span class="experience-title"> - ${exp?.title}</span>`,
-          )}
-              ${renderConditionally(exp?.location, `<div class="experience-location">${exp.location}</div>`)}
-              ${renderConditionally(
-                exp?.description,
-                `<div class="experience-description">${generateMarkdownFromText(exp.description)}</div>`,
-              )}
-              
-            </div>
+
+            <div class="experience-description">${generateMarkdownFromText(exp?.description)}</div>
           </div>
           `,
         '',
@@ -37,145 +33,140 @@ const makeExperienceHTML = (title: string, experiences: Experience[]) => `
   </div>
 `;
 
-const compact = (cv: Cv) => {
+export const classy = (cv: Cv) => {
   const { personalInfo, educations, workExperiences, projects, hardSkills, softSkills, otherTools, languages } = cv;
 
   return `<!DOCTYPE html>
   <html>
     <head>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-        rel="stylesheet"
-      />
       <meta charset="utf-8" />
       <style>
-        body {
-          font-family: 'Roboto', sans-serif;
-          font-size: 13px;
-          line-height: 1.35em;
+        *,
+        *::before,
+        *::after {
+          -webkit-box-sizing: border-box;
+                  box-sizing: border-box;
         }
-        ul, ol {
+        :root {
+          --main-color: #2079c7;
+          --text-color-normal: #343434;
+          --text-color-grey: #666666;
+          --text-color-black: #000;
+        }
+        body {
+          font-family: Helvetica, Arial, sans-serif;
+          font-size: 10pt;
+          line-height: 1.25em;
+          color: var(--text-color-normal);
+        }
+        ul,
+        ol {
           list-style-position: inside;
           padding: 0;
           margin: 0;
+        }
+        li {
+          margin: 2px;
         }
         p {
           margin: 0;
         }
         .document {
+          -webkit-box-sizing: border-box;
+                  box-sizing: border-box;
           display: -webkit-box;
-          display: -webkit-flex;
+          display: -ms-flexbox;
           display: flex;
-          width: 100%;
-          margin: 0 auto;
-          border: 2px solid #494948;
           -webkit-box-orient: vertical;
           -webkit-box-direction: normal;
-          -webkit-flex-direction: column;
-          flex-direction: column;
-          -webkit-border-radius: 5px;
-          border-radius: 5px;
+              -ms-flex-direction: column;
+                  flex-direction: column;
+          width: 100%;
+          margin: 0 auto;
+          padding: 20px;
+          -webkit-box-shadow: 0 0 4px 1px #ccc;
+                  box-shadow: 0 0 4px 1px #ccc;
           overflow: hidden;
         }
         .header {
-          display: -webkit-box;
-          display: -webkit-flex;
-          display: flex;
-          -webkit-box-align: center;
-          -webkit-align-items: center;
-          align-items: center;
-          padding: 20px;
-          background-color: rgb(7, 7, 7);
+          padding-bottom: 20px;
         }
         .fullName {
           font-weight: 700;
-          font-size: 25px;
-          color: white;
+          font-size: 28pt;
+          color: var(--main-color);
         }
         .content {
           display: -webkit-box;
-          display: -webkit-flex;
+          display: -ms-flexbox;
           display: flex;
         }
         .main-content {
           -webkit-box-flex: 1;
-          -webkit-flex: 1;
-          flex: 1;
+              -ms-flex: 1;
+                  flex: 1;
           display: -webkit-box;
-          display: -webkit-flex;
+          display: -ms-flexbox;
           display: flex;
           -webkit-box-orient: vertical;
           -webkit-box-direction: normal;
-          -webkit-flex-direction: column;
-          flex-direction: column;
+              -ms-flex-direction: column;
+                  flex-direction: column;
           width: 66%;
           padding: 20px;
         }
         .side-content {
           display: -webkit-box;
-          display: -webkit-flex;
+          display: -ms-flexbox;
           display: flex;
           -webkit-box-orient: vertical;
           -webkit-box-direction: normal;
-          -webkit-flex-direction: column;
-          flex-direction: column;
+              -ms-flex-direction: column;
+                  flex-direction: column;
           width: 33%;
           padding: 20px;
-          background-color: #f1f0ee;
+          color: var(--text-color-grey);
         }
-        .field:nth-child(1n + 2) {
-          margin-top: 16px;
+        .contact {
+          color: var(--text-color-normal);
+        }
+        .contact > *:nth-child(1n + 2) {
+          font-weight: 700;
+        }
+        .websites {
+          margin-top: 16px !important;
         }
         .fieldTitle {
-          font-size: 20px;
+          font-size: 12pt;
           font-weight: 700;
-          color: rgb(7, 7, 7);
+          text-transform: uppercase;
+          padding: 20px 0;
+          color: var(--main-color);
         }
         .fieldContent > *:nth-child(1n + 2) {
           margin-top: 2px;
         }
-        .fieldContentTitle {
-          font-weight: 700;
-          font-size: 15px;
-        }
-        .fieldContentTitle:nth-child(1n + 2) {
-          margin-top: 10px;
-        }
-        .divider {
-          display: block;
-          width: 100%;
-          height: 1px;
-          margin: 4px auto 15px;
-          background-color: rgb(192, 192, 192);
-        }
         .experience {
-          display: -webkit-box;
-          display: -webkit-flex;
-          display: flex;
+          color: var(--text-color-grey);
         }
         .experience:nth-child(2n) {
           margin-top: 10px;
         }
-        .experience-info > *:nth-child(2n) {
-          margin: 5px 0;
-        }
         .experience-name {
-          font-size: 12pt;
           font-weight: 700;
+          color: var(--text-color-normal);
         }
         .experience-location {
+          color: var(--text-color-normal);
+        }
+        .experience-title {
           font-style: italic;
+          color: var(--text-color-normal);
         }
         .experience-period {
-          width: 30%;
-          font-weight: 700;
-          font-size: 12px;
-        }
-        .experience-endAt {
-          display: block;
-          margin-top: 5px;
+          margin: 6px 0;
+          font-size: 8pt;
+          color: var(--text-color-grey);
         }
         .skill {
           width: 100%;
@@ -192,123 +183,117 @@ const compact = (cv: Cv) => {
           align-items: center;
         }
         .skill-name {
+          color: var(--text-color-grey);
           width: 50%;
           overflow-wrap: break-word;
         }
         .skill-rating {
           display: -webkit-box;
-          display: -webkit-flex;
+          display: -ms-flexbox;
           display: flex;
-          -webkit-box-pack: space-between;
-          -webkit-justify-content: space-between;
+          -webkit-box-pack: justify;
+          -ms-flex-pack: justify;
           justify-content: space-between;
           width: 60px;
         }
         .skill-rating-fill {
           width: 10px;
           height: 10px;
-          -webkit-border-radius: 50%;
           border-radius: 50%;
-          background-color: rgb(7, 7, 7);
+          background-color: var(--main-color);
         }
         .skill-rating-blank {
           width: 10px;
           height: 10px;
-          -webkit-border-radius: 50%;
           border-radius: 50%;
-          background-color: rgb(173, 173, 173);
+          background-color: #ccc;
         }
       </style>
     </head>
     <body>
       <div class="document">
-        <div class="header">
-          <div class="fullName">${personalInfo?.fullName}</div>
-        </div>
-  
         <div class="content">
           <div class="main-content">
+            <div class="header">
+              <div class="fullName">${personalInfo?.fullName}</div>
+            </div>
+  
             ${renderConditionally(
               personalInfo?.about,
               `<div class="about">${generateMarkdownFromText(personalInfo?.about)}</div>`,
             )}
+
             ${renderConditionally(workExperiences?.length, makeExperienceHTML('Experience', workExperiences))}
 
             ${renderConditionally(educations?.length, makeExperienceHTML('Education', educations))}
 
             ${renderConditionally(
               projects?.length,
-              `<div class="field">
+              `
+              <div class="field">
                 <div class="fieldTitle">Projects</div>
-                <div class="divider"></div>
                 <div class="fieldContent experiences">
                   <!-- map projects -->
                   ${projects?.reduce(
-                    (html, proj) =>
+                    (html, project) =>
                       html +
                       `<div class="experience">
-                      <div class="experience-info">
-                        <span class="experience-name">${proj?.name}</span>${renderConditionally(
-                        proj?.title,
-                        `<span class="experience-title"> - ${proj?.title}</span>`,
-                      )}
                         ${renderConditionally(
-                          proj?.description,
-                          `<div class="experience-description">${generateMarkdownFromText(proj.description)}</div>`,
-                        )}
+                          project?.name,
+                          `<span class="experience-name">${project?.name}</span>`,
+                        )}${renderConditionally(
+                        project?.title,
+                        `<span class="experience-title"> - ${project?.title}</span>`,
+                      )}
+                        <div class="experience-description">${generateMarkdownFromText(project?.description)}</div>
                       </div>
-                    </div>
-                    `,
+                      `,
                     '',
                   )}
+                </div>
               </div>
-            </div>`,
+              `,
             )}
           </div>
   
           <div class="side-content">
             <div class="field">
-              <div class="fieldTitle">Personal Info</div>
-              <div class="divider"></div>
               <div class="fieldContent contact">
                 ${renderConditionally(
-                  personalInfo?.email,
+                  personalInfo?.address,
                   `
-                    <div class="fieldContentTitle">E-mail</div>
-                    <div>${personalInfo?.email}</div>
+                    <div>${personalInfo?.address}</div>
                   `,
                 )}
                 ${renderConditionally(
                   personalInfo?.phone,
                   `
-                    <div class="fieldContentTitle">Phone</div>
                     <div>${personalInfo?.phone}</div>
                   `,
                 )}
                 ${renderConditionally(
-                  personalInfo?.address,
+                  personalInfo?.email,
                   `
-                    <div class="fieldContentTitle">Address</div>
-                    <div>${personalInfo?.address}</div>
+                    <div>${personalInfo?.email}</div>
                   `,
                 )}
                 ${renderConditionally(
                   personalInfo?.websites?.length,
-                  `<div class="fieldContentTitle">Websites</div>
-                  <div class="fieldContent websites">
-                    <!-- map websites -->
-                    ${personalInfo?.websites?.reduce((html, site) => html + `<div>${site}</div>`, '')}
-                  </div>
+                  `
+                    <div class="fieldContent websites">
+                      <!-- map websites -->
+                      ${personalInfo?.websites?.reduce((html, site) => html + `<div>${site}</div>`, '')}
+                    </div>
                   `,
                 )}
               </div>
             </div>
+
             ${renderConditionally(
               hardSkills?.length,
               `
               <div class="field">
-                <div class="fieldTitle">Hard Skills</div>
-                <div class="divider"></div>
+                <div class="fieldTitle">Skills</div>
                 <div class="fieldContent skills">
                   <!-- map hardSkills -->
                   ${hardSkills?.reduce(
@@ -341,7 +326,6 @@ const compact = (cv: Cv) => {
               `
               <div class="field">
                 <div class="fieldTitle">Other Tools</div>
-                <div class="divider"></div>
                 <div class="fieldContent skills">
                   <!-- map otherTools -->
                   ${otherTools
@@ -356,8 +340,7 @@ const compact = (cv: Cv) => {
               softSkills?.length,
               `
               <div class="field">
-                <div class="fieldTitle">Soft Skills</div>
-                <div class="divider"></div>
+                <div class="fieldTitle">Interpersonal Skills</div>
                 <div class="fieldContent skills">
                   <!-- map softSkills -->
                   ${softSkills?.reduce(
@@ -374,12 +357,12 @@ const compact = (cv: Cv) => {
               </div>
               `,
             )}
+  
             ${renderConditionally(
               languages?.length,
               `
               <div class="field">
               <div class="fieldTitle">Languages</div>
-              <div class="divider"></div>
                 <div class="fieldContent languages">
                   <!-- map languages -->
                   ${languages?.reduce((html, language) => html + `<div>${language}</div>`, '')}
@@ -391,8 +374,6 @@ const compact = (cv: Cv) => {
         </div>
       </div>
     </body>
-  </html>
+  </html>  
   `;
 };
-
-export { compact };
