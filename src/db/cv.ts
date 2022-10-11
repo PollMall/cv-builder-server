@@ -1,12 +1,13 @@
 import { bucket, db } from '../firebase';
-import { Cv, CvRequest, Education, Templates, User, WorkExperience } from './types';
+import { Cv, CvRequest, Education, Templates, User, WorkExperience, Project } from './types';
 import { v4 as uuidv4 } from 'uuid';
 import { updatePopularity } from './skill';
 import { getDifference } from './utils';
 import { getFilePDFFromTemplate } from './template';
 import { validateCv, validateCvRequest } from './validation';
+import { descSortExperienceByStartAt } from './utils';
 
-const assignIds = (field: Education[] | WorkExperience[] | undefined) => {
+const assignIds = (field: Education[] | WorkExperience[] | Project[] | undefined) => {
   return field?.map((el) => (el.id ? el : { ...el, id: uuidv4() }));
 };
 
@@ -23,13 +24,14 @@ const addCv = async (uuid: string, cv: string) => {
   const savedCv = {
     ...parsedCv,
     id: uuidv4(),
-    educations: assignIds(parsedCv.educations),
-    workExperiences: assignIds(parsedCv.workExperiences),
+    educations: assignIds(parsedCv.educations).sort(descSortExperienceByStartAt),
+    workExperiences: assignIds(parsedCv.workExperiences).sort(descSortExperienceByStartAt),
+    projects: assignIds(parsedCv.projects),
     feedback: false,
     createdAt: currentTime,
     updatedAt: currentTime,
     score: computeScore(parsedCv as Cv),
-    template: Templates.NORMAL,
+    template: Templates.CLASSY,
   } as Cv;
 
   // upload CV to Firebase Storage
@@ -43,9 +45,10 @@ const addCv = async (uuid: string, cv: string) => {
   cvs.push(savedCv);
   await docRef.update({ cvs });
 
-  // update popularity for hard/soft skills
+  // update popularity for skills
   await updatePopularity(savedCv.field, [], savedCv.hardSkills, 'hardSkills');
   await updatePopularity(savedCv.field, [], savedCv.softSkills, 'softSkills');
+  await updatePopularity(savedCv.field, [], savedCv.otherTools, 'otherTools');
 
   return savedCv;
 };
@@ -63,14 +66,20 @@ const deleteCv = async (uuid: string, cvId: string) => {
   });
   await docRef.update({ cvs: result });
 
-  // update popularity for hard/soft skills
+  // update popularity for skills
   await updatePopularity(removedCv.field, removedCv.hardSkills, [], 'hardSkills');
   await updatePopularity(removedCv.field, removedCv.softSkills, [], 'softSkills');
+  await updatePopularity(removedCv.field, removedCv.otherTools, [], 'otherTools');
 
   // remove CV from Firebase Storage
-  await deleteCVFromStorage(uuid, cvId);
+  try {
+    await deleteCVFromStorage(uuid, cvId);
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
 
-  return removedCv;
+  return true;
 };
 
 const updateCv = async (uuid: string, newCv: string) => {
@@ -81,8 +90,9 @@ const updateCv = async (uuid: string, newCv: string) => {
 
   const savedCv = {
     ...parsedNewCv,
-    educations: assignIds(parsedNewCv.educations),
-    workExperiences: assignIds(parsedNewCv.workExperiences),
+    educations: assignIds(parsedNewCv.educations).sort(descSortExperienceByStartAt),
+    workExperiences: assignIds(parsedNewCv.workExperiences).sort(descSortExperienceByStartAt),
+    projects: assignIds(parsedNewCv.projects),
     updatedAt: Date.now().toString(),
     score: computeScore(parsedNewCv as Cv),
   } as Cv;
@@ -100,7 +110,6 @@ const updateCv = async (uuid: string, newCv: string) => {
   let prevSavedCv: Cv;
   const resultCvs = cvs.reduce((arr, c) => {
     if (c.id === savedCv.id) {
-      console.log('here');
       prevSavedCv = c;
       return arr.concat(savedCv);
     }
@@ -111,7 +120,7 @@ const updateCv = async (uuid: string, newCv: string) => {
   }
   await docRef.update({ cvs: resultCvs });
 
-  // update popularity for hard/soft skills
+  // update popularity for skills
   await updatePopularity(
     savedCv.field,
     getDifference(prevSavedCv.hardSkills, savedCv.hardSkills),
@@ -123,6 +132,12 @@ const updateCv = async (uuid: string, newCv: string) => {
     getDifference(prevSavedCv.softSkills, savedCv.softSkills),
     getDifference(savedCv.softSkills, prevSavedCv.softSkills),
     'softSkills',
+  );
+  await updatePopularity(
+    savedCv.field,
+    getDifference(prevSavedCv.otherTools, savedCv.otherTools),
+    getDifference(savedCv.otherTools, prevSavedCv.otherTools),
+    'otherTools',
   );
 
   return savedCv;
@@ -181,13 +196,14 @@ const deleteCVFromStorage = async (uid: string, cvId: string) => {
 
 const computeScore = (cv: Cv): number => {
   const weights = {
-    personalInfo: 10,
-    locationInfo: 10,
-    languages: 10,
-    hardSkills: 20,
-    softSkills: 20,
-    educations: 10,
-    workExperiences: 20,
+    personalInfo: 8,
+    languages: 8,
+    hardSkills: 15,
+    softSkills: 15,
+    otherTools: 12,
+    educations: 12,
+    workExperiences: 15,
+    projects: 15,
   };
   const scores = {
     personalInfo: 0,
@@ -195,17 +211,16 @@ const computeScore = (cv: Cv): number => {
     languages: 0,
     hardSkills: 0,
     softSkills: 0,
+    otherTools: 0,
     educations: 0,
     workExperiences: 0,
+    projects: 0,
   };
-  const { personalInfo, locationInfo, languages, hardSkills, softSkills, educations, workExperiences } = cv;
+  const { personalInfo, languages, hardSkills, softSkills, otherTools, educations, workExperiences, projects } = cv;
 
   // check for every field
   if (personalInfo) {
     scores.personalInfo = getScoreFromObject(personalInfo);
-  }
-  if (locationInfo) {
-    scores.locationInfo = getScoreFromObject(locationInfo);
   }
   if (languages) {
     scores.languages = getScoreFromArray(languages, 2);
@@ -216,11 +231,17 @@ const computeScore = (cv: Cv): number => {
   if (softSkills) {
     scores.softSkills = getScoreFromArray(softSkills, 4);
   }
+  if (otherTools) {
+    scores.otherTools = getScoreFromArray(otherTools, 2);
+  }
   if (educations) {
     scores.educations = getScoreFromArray(educations);
   }
   if (workExperiences) {
     scores.workExperiences = getScoreFromArray(workExperiences);
+  }
+  if (projects) {
+    scores.projects = getScoreFromArray(projects);
   }
 
   return Math.floor(weightedAvg(weights, scores) * 10);
@@ -266,7 +287,7 @@ const getScoreFromObject = (obj: Record<string, any>): number => {
 
 /**
  * Receives an array and returns the average
- * @param obj any array
+ * @param arr any array
  * @returns the average for the elements that are defined
  */
 const getScoreFromArray = (arr: any[], minNoOfElements = 1): number => {

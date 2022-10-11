@@ -2,7 +2,5 @@
   "watch": ["src"],
   "ext": "ts,json",
   "ignore": ["src/**/*.spec.ts"],
-  "events": {
-    "start": "node -e \"console.clear()\""
-  }
+  "exec": "npm run start:watch"
 }

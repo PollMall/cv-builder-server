@@ -10,5 +10,5 @@
   },
   "lib": ["es2015"],
   "include": ["src"],
-  "exclude": ["cv-builder-*"]
+  "exclude": ["cv-builder-*", "**/*.spec.ts"]
 }
