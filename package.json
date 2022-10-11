@@ -36,13 +36,14 @@
     "graphql": "^15.5.1",
     "markdown-it": "^13.0.1",
     "node-fetch": "^2.6.1",
-    "puppeteer": "^18.0.5",
+    "puppeteer": "^18.2.1",
     "uuid": "^8.3.2",
     "yup": "^0.32.9"
   },
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",
     "@types/node-fetch": "^2.5.12",
+    "@types/puppeteer": "^5.4.6",
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.28.4",
     "@typescript-eslint/parser": "^4.28.4",
