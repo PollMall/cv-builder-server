@@ -21,7 +21,7 @@ const getHTMLTemplate = (cv: Cv, template: string = Templates.CLASSY) => {
 const createPDFFromHTML = async (html: string) => {
   const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
   const page = await browser.newPage();
-  await page.setContent(html);
+  await page.setContent(html, { waitUntil: 'networkidle0' });
   const pdf = await page.pdf({ format: 'letter', printBackground: true });
   await browser.close();
   return pdf;
