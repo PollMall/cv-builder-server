@@ -15,7 +15,7 @@ const keys = {
 
 admin.initializeApp({
   credential: admin.credential.cert(keys as ServiceAccount),
-  storageBucket: 'cv-builder-4a6bd.appspot.com',
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
 });
 
 const db = admin.firestore();
