@@ -1,90 +1,108 @@
-export type User = {
+interface User {
   uid: string;
   displayName: string;
   credentials?: Credentials;
   cvs: Cv[];
-};
+}
 
-export type Credentials = {
+interface Credentials {
   idToken: string;
   refreshToken: string;
   expiresIn: number;
-};
-
-export enum Templates {
-  COMPACT = 'COMPACT',
-  FANCY = 'FANCY',
-  CLASSY = 'CLASSY',
 }
 
-export type PersonalInfo = {
-  fullName: string;
-  email: string;
-  phone?: string;
-  address?: string;
-  websites?: string[];
-  about?: string;
-};
+enum Templates {
+  NORMAL = 'NORMAL',
+  COMPACT = 'COMPACT',
+  FANCY = 'FANCY',
+}
 
-export type Experience = {
-  id?: string;
-  name: string;
-  description?: string;
-  location?: string;
-  title?: string;
-  startAt: string;
-  endAt: string;
-};
-
-export type Education = Experience;
-
-export type WorkExperience = Experience;
-
-export type Project = {
-  id?: string;
-  name: string;
-  description?: string;
-  title?: string;
-};
-
-export type RatableSkill = {
-  name: string;
-  rating: number;
-};
-
-export type UnratableSkill = {
-  name: string;
-};
-
-export type HardSkill = RatableSkill;
-
-export type SoftSkill = UnratableSkill;
-
-export type OtherTool = UnratableSkill;
-
-export type FieldSkill = {
-  popularity: number;
-};
-
-export type CvRequest = {
+interface Cv {
+  id: string;
   title: string;
   field: string;
   educations?: Education[];
   workExperiences?: WorkExperience[];
-  projects?: Project[];
+  feedback?: boolean;
   hardSkills?: HardSkill[];
   softSkills?: SoftSkill[];
-  otherTools?: OtherTool[];
   languages?: string[];
+  locationInfo?: LocationInfo;
   personalInfo?: PersonalInfo;
-};
-
-export type Cv = CvRequest & {
-  id?: string;
-  feedback?: boolean;
   createdAt: string;
   updatedAt: string;
   score: number;
   downloadLink?: string;
-  template?: string;
+  template: string;
+}
+
+interface PersonalInfo {
+  fullName: string;
+  email: string;
+  phone?: string;
+  about?: string;
+}
+
+interface LocationInfo {
+  address?: string;
+  websites?: string[];
+}
+
+interface Education {
+  id?: string;
+  name: string;
+  description?: string;
+  location?: string;
+  startAt: string;
+  endAt: string;
+}
+
+interface WorkExperience {
+  id?: string;
+  name: string;
+  description?: string;
+  location?: string;
+  startAt: string;
+  endAt: string;
+}
+
+interface HardSkill {
+  name: string;
+  rating: number;
+}
+
+interface SoftSkill {
+  name: string;
+  rating: number;
+}
+
+interface FieldSkill {
+  popularity: number;
+}
+
+interface CvRequest {
+  title: string;
+  field: string;
+  educations?: Education[];
+  workExperiences?: WorkExperience[];
+  hardSkills?: HardSkill[];
+  softSkills?: SoftSkill[];
+  languages?: string[];
+  locationInfo?: LocationInfo;
+  personalInfo?: PersonalInfo;
+}
+
+export {
+  User,
+  Credentials,
+  Cv,
+  Education,
+  WorkExperience,
+  HardSkill,
+  SoftSkill,
+  LocationInfo,
+  PersonalInfo,
+  FieldSkill,
+  CvRequest,
+  Templates,
 };

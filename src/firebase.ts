@@ -1,5 +1,7 @@
 import admin, { ServiceAccount } from 'firebase-admin';
 
+// import serviceAccount from '../cv-builder-4a6bd-firebase-adminsdk-tszt2-5f7c26834f.json';
+
 const keys = {
   type: process.env.TYPE,
   project_id: process.env.PROJECT_ID,
