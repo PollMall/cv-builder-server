@@ -1,8 +1,8 @@
 import { Cv } from '../types';
-import { renderConditionally, generateMarkdownFromText } from './helper';
+import { renderConditionally } from './helper';
 
 const normal = (cv: Cv) => {
-  const { personalInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
+  const { personalInfo, locationInfo, educations, workExperiences, hardSkills, softSkills, languages } = cv;
 
   return `<!DOCTYPE html>
   <html>
@@ -11,24 +11,12 @@ const normal = (cv: Cv) => {
       <style>
         body {
           font-family: 'Times New Roman';
-          line-height: 1.35em;
-        }
-        ul, ol {
-          list-style-position: inside;
-          padding: 0;
-          margin: 0;
-        }
-        p {
-          margin: 0;
-        }
-        li {
-          transform: translateX(50%);
         }
         .document {
           display: -webkit-box;
           display: -webkit-flex;
           display: flex;
-          width: 100%;
+          width: 563px;
           margin: 0 auto;
           border: 2px solid #494948;
           -webkit-box-orient: vertical;
@@ -151,39 +139,21 @@ const normal = (cv: Cv) => {
       <div class="document">
         <div class="header">
           <div class="fullName">${personalInfo?.fullName}</div>
-          ${renderConditionally(
-            personalInfo?.about,
-            `<div class="about">${generateMarkdownFromText(personalInfo?.about)}</div>`,
-          )}
+          ${renderConditionally(personalInfo?.about, `<div class="about">${personalInfo?.about}</div>`)}
         </div>
   
         <div class="content">
           <div class="field">
             <div class="fieldTitle">Contact</div>
             <div class="fieldContent contact">
+              <div>${personalInfo?.email}</div>
+              <div>${personalInfo?.phone}</div>
+              <div>${locationInfo?.address}</div>
               ${renderConditionally(
-                personalInfo?.email,
-                `
-                <div>${personalInfo?.email}</div>
-              `,
-              )}
-              ${renderConditionally(
-                personalInfo?.phone,
-                `
-                <div>${personalInfo?.phone}</div>
-              `,
-              )}
-              ${renderConditionally(
-                personalInfo?.address,
-                `
-                <div>${personalInfo?.address}</div>
-              `,
-              )}
-              ${renderConditionally(
-                personalInfo?.websites?.length,
+                locationInfo?.websites?.length,
                 `<div class="fieldContent websites">
                   <!-- map websites -->
-                  ${personalInfo?.websites?.reduce((html, site) => html + `<div>${site}</div>`, '')}
+                  ${locationInfo?.websites?.reduce((html, site) => html + `<div>${site}</div>`, '')}
                 </div>`,
               )}
             </div>
@@ -215,7 +185,7 @@ const normal = (cv: Cv) => {
                     `<div class="experience">
                       <span class="experience-name">${we.name}</span>
                       -
-                      <span class="experience-location">${we?.location}</span>
+                      <span class="experience-location">${we.location}</span>
                       <div class="experience-period">
                         <span class="experience-startAt">${
                           we.startAt ? new Date(parseInt(we.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
@@ -225,7 +195,7 @@ const normal = (cv: Cv) => {
                           we.endAt ? new Date(parseInt(we.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
                         }</span>
                       </div>
-                      <div class="experience-description">${generateMarkdownFromText(we?.description)}</div>
+                      <div class="experience-description">• ${we.description}</div>
                     </div>`,
                   '',
                 )}
@@ -247,7 +217,7 @@ const normal = (cv: Cv) => {
                     `<div class="experience">
                       <span class="experience-name">${edu.name}</span>
                       -
-                      <span class="experience-location">${edu?.location}</span>
+                      <span class="experience-location">${edu.location}</span>
                       <div class="experience-period">
                         <span class="experience-startAt">${
                           edu.startAt ? new Date(parseInt(edu.startAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
@@ -257,7 +227,7 @@ const normal = (cv: Cv) => {
                           edu.endAt ? new Date(parseInt(edu.endAt, 10)).toLocaleDateString('en-US') : 'PRESENT'
                         }</span>
                       </div>
-                      <div class="experience-description">${generateMarkdownFromText(edu?.description)}</div>
+                      <div class="experience-description">• ${edu.description}</div>
                     </div>`,
                   '',
                 )}
@@ -308,6 +278,16 @@ const normal = (cv: Cv) => {
                     html +
                     `<div class="skill">
                       <div class="skill-name">${ss.name}</div>
+                      <div class="skill-rating">
+                        ${[...new Array(ss.rating)].reduce(
+                          (html) => html + '<div class="skill-rating-fill"></div>',
+                          '',
+                        )}
+                        ${[...new Array(5 - ss.rating)].reduce(
+                          (html) => html + '<div class="skill-rating-blank"></div>',
+                          '',
+                        )}
+                      </div>
                     </div>`,
                   '',
                 )}

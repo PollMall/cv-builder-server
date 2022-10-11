@@ -1,15 +1,5 @@
 import { gql } from 'apollo-server';
 
-const EXPERIENCE_FIELDS = `
-  id: String
-  name: String
-  description: String
-  location: String
-  title: String
-  startAt: String
-  endAt: String
-`;
-
 const typeDefs = gql`
   type User {
     uid: String
@@ -30,12 +20,11 @@ const typeDefs = gql`
     field: String
     educations: [Education]
     workExperiences: [WorkExperience]
-    projects: [Project]
     feedback: Boolean
     hardSkills: [HardSkill]
     softSkills: [SoftSkill]
-    otherTools: [OtherTools]
     languages: [String]
+    locationInfo: LocationInfo
     personalInfo: PersonalInfo
     createdAt: String
     updatedAt: String
@@ -49,23 +38,29 @@ const typeDefs = gql`
     email: String
     phone: String
     about: String
+  }
+
+  type LocationInfo {
     address: String
     websites: [String]
   }
 
   type Education {
-    ${EXPERIENCE_FIELDS}
-  }
-
-  type WorkExperience {
-    ${EXPERIENCE_FIELDS}
-  }
-
-  type Project {
     id: String
     name: String
     description: String
-    title: String
+    location: String
+    startAt: String
+    endAt: String
+  }
+
+  type WorkExperience {
+    id: String
+    name: String
+    description: String
+    location: String
+    startAt: String
+    endAt: String
   }
 
   type HardSkill {
@@ -75,10 +70,7 @@ const typeDefs = gql`
 
   type SoftSkill {
     name: String
-  }
-
-  type OtherTools {
-    name: String
+    rating: Int
   }
 
   type FieldSkill {
@@ -102,7 +94,7 @@ const typeDefs = gql`
     signOutUser(uid: String!): Boolean
     registerUser(email: String!, password: String!, fullName: String!): User
     addCv(uid: String!, cv: String!): Cv
-    deleteCv(uid: String!, cvId: String!): Boolean
+    deleteCv(uid: String!, cvId: String!): Cv
     updateCv(uid: String!, newCv: String!): Cv
     refreshTokenUser(refreshToken: String!): Credentials
   }
