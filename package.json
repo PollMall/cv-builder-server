@@ -37,6 +37,7 @@
     "markdown-it": "^13.0.1",
     "node-fetch": "^2.6.1",
     "puppeteer": "^18.2.1",
+    "puppeteer-core": "^18.2.1",
     "uuid": "^8.3.2",
     "yup": "^0.32.9"
   },
