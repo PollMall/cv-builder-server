@@ -54,7 +54,7 @@ export const classy = (cv: Cv) => {
           --text-color-black: #000;
         }
         body {
-          font-family: Helvetica, Arial, sans-serif;
+          font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
           font-size: 10pt;
           line-height: 1.25em;
           color: var(--text-color-normal);
