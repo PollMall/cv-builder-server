@@ -39,6 +39,9 @@ export const classy = (cv: Cv) => {
   return `<!DOCTYPE html>
   <html>
     <head>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
       <meta charset="utf-8" />
       <style>
         *,
@@ -54,7 +57,7 @@ export const classy = (cv: Cv) => {
           --text-color-black: #000;
         }
         body {
-          font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+          font-family: 'Roboto', sans-serif;
           font-size: 10pt;
           line-height: 1.25em;
           color: var(--text-color-normal);
