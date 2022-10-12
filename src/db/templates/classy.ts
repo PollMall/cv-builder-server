@@ -59,7 +59,7 @@ export const classy = (cv: Cv) => {
         body {
           font-family: 'Roboto', sans-serif;
           font-size: 10pt;
-          line-height: 1.25em;
+          line-height: 1.26em;
           color: var(--text-color-normal);
         }
         ul,
